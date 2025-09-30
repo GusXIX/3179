@@ -1,9 +1,9 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Pubs I  Melbourne",
-  "width": 800,
-  "height": 400,
-  "projection": {"type": "equalEarth"},
+  "title": "Pubs in Melbourne",
+  "width": 1000,
+  "height": 1000,
+  "projection": {"type": "mercator"},
   "layer": [
     {
       "data": {
@@ -32,10 +32,10 @@
         "latitude": {"field": "latitude", "type": "quantitative"},
         
         "color": {
-          "field": "review_count",
+          "field": "rating",
           "type": "quantitative",
           "title": "Amount of Reviews",
-          "scale": {"scheme": "reds"}
+          "scale": {"range": ["#FFD700", "#006400"]}
         }
       }
     }
