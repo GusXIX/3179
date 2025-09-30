@@ -34,7 +34,7 @@
         "color": {
           "field": "rating",
           "type": "quantitative",
-          "title": "Amount of Reviews",
+          "title": "Yelp Rating",
           "scale": {"range": ["#FFD700", "#006400"]}
         }
       }
