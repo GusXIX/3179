@@ -21,7 +21,7 @@
     },
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/data/earthquake.csv"
+        "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Week-9-Homework/data/Yelp_500_PUBS.csv"
       },
       "mark": {
         "type": "circle",
@@ -30,16 +30,11 @@
       "encoding": {
         "longitude": {"field": "longitude", "type": "quantitative"},
         "latitude": {"field": "latitude", "type": "quantitative"},
-        "size": {
-          "field": "mag",
-          "type": "quantitative",
-          "title": "Magnitude (Richter scale)",
-          "scale": {"domain": [4, 8]}
-        },
+        
         "color": {
-          "field": "depth",
+          "field": "review_count",
           "type": "quantitative",
-          "title": "Depth in km",
+          "title": "Amount of Reviews",
           "scale": {"scheme": "reds"}
         }
       }
