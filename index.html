@@ -22,17 +22,18 @@
                     "title": "Review Count vs Distance from CBD",
                     "layer": [
                         {
+                            "transform": [
+                                { "filter": { "param": "brush" } }
+                            ],
                             "mark": {
                                 "type": "circle",
-                                "opacity": 0.4,
-
+                                "opacity": 0.6
                             },
                             "encoding": {
                                 "x": {
                                     "field": "distance",
                                     "type": "quantitative",
-                                    "title": "Distance from CBD (m)",
-                                    "scale": {"domain": {"param": "brush"}}
+                                    "title": "Distance from CBD (m)"
                                 },
                                 "y": {
                                     "field": "review_count",
@@ -52,45 +53,6 @@
                                     {"field": "rating", "type": "quantitative", "title": "Avg Rating"}
                                 ]
                             }
-                        },
-                        {
-                            "transform": [
-                                {
-                                    "aggregate": [{"op": "max", "field": "distance", "as": "max_dist"}]
-                                },
-                                {
-                                    "lookup": "max_dist",
-                                    "from": {
-                                        "data": {
-                                            "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Week-10/data/Yelp_500_PUBS.csv"
-                                        },
-                                        "key": "distance",
-                                        "fields": ["name", "distance", "review_count"]
-                                    }
-                                },
-                                {
-                                    "calculate": "'Furthest Pub from CBD: ' + datum.name + ';Distance(m): ' + datum.distance",
-                                    "as": "text_annotation_raw"
-                                },
-                                {
-                                    "calculate": "split(datum.text_annotation_raw, ';')",
-                                    "as": "text_annotation"
-                                }
-                            ],
-                            "mark": {
-                                "type": "text",
-                                "align": "right",
-                                "dx": -8,
-                                "dy": -38,
-                                "baseline": "middle",
-                                "fontStyle": "italic",
-                                "fontSize": 12
-                            },
-                            "encoding": {
-                                "x": {"field": "distance", "type": "quantitative"},
-                                "y": {"field": "review_count", "type": "quantitative"},
-                                "text": {"field": "text_annotation", "type": "nominal"}
-                            }
                         }
                     ]
                 },
@@ -99,7 +61,10 @@
                     "height": 120,
                     "mark": "line",
                     "params": [
-                        {"name": "brush", "select": {"type": "interval", "encodings": ["x"]}}
+                        {
+                            "name": "brush",
+                            "select": { "type": "interval", "encodings": ["x"] }
+                        }
                     ],
                     "encoding": {
                         "x": {
@@ -113,7 +78,69 @@
                             "title": "Review Count"
                         }
                     }
+                },
+                // Bar Chart with annonation
+                {
+                "width": 600,
+                "height": 300,
+                "layer": [
+                    {
+                    "mark": "bar",
+                    "encoding": {
+                        "x": {
+                        "field": "rating",
+                        "type": "ordinal",
+                        "title": "Average Rating"
+                        },
+                        "y": {
+                        "aggregate": "count",
+                        "type": "quantitative",
+                        "title": "Number of Pubs"
+                        },
+                        "color": {
+                        "field": "rating",
+                        "type": "ordinal",
+                        "scale": { "scheme": "blues" }
+                        },
+                        "tooltip": [
+                        { "field": "rating", "type": "ordinal", "title": "Rating" },
+                        { "aggregate": "count", "type": "quantitative", "title": "Number of Pubs" }
+                        ]
+                    }
+                    },
+                    {
+                    "transform": [
+                        {
+                        "aggregate": [{ "op": "count", "as": "pub_count" }],
+                        "groupby": ["rating"]
+                        },
+                        {
+                        "window": [{ "op": "rank", "as": "rank" }],
+                        "sort": [{ "field": "pub_count", "order": "descending" }]
+                        },
+                        {
+                        "filter": "datum.rank == 1"
+                        },
+                        {
+                        "calculate": "'Most common Yelp review count: ' + datum.pub_count",
+                        "as": "text_annotation"
+                        },
+                    ],
+                    "mark": {
+                        "type": "text",
+                        "align": "center",
+                        "fontWeight": "bold",
+                        "color": "black"
+                    },
+                    "encoding": {
+                        "x": { "field": "rating", "type": "ordinal" },
+                        "y": { "field": "pub_count", "type": "quantitative" },
+                        "text": { "field": "text_annotation", "type": "nominal" }
+                    }
+                    }
+                ]
                 }
+
             ]
         };
 
