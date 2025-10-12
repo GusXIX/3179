@@ -1,150 +1,205 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Pubs in Melbourne</title>
-    <script src="https://cdn.jsdelivr.net/npm/vega@6.2.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.1.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7.0.2"></script>
+  <meta charset="UTF-8" />
+  <title>Pubs in Melbourne</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@6.2.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@7.0.2"></script>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      font-size: 60px;
+    }
+    .map-text {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    #vis, #vis2, #vis3 {
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Pubs in Melbourne</h1>
-    <div id="vis"></div>
-    <script>
-        const spec = {
-            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-            "data": {
-                "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Week-10/data/Yelp_500_PUBS.csv"
-            },
-            "vconcat": [
-                {
-                    "width": 600,
-                    "height": 300,
-                    "title": "Review Count vs Distance from CBD",
-                    "layer": [
-                        {
-                            "transform": [
-                                { "filter": { "param": "brush" } }
-                            ],
-                            "mark": {
-                                "type": "circle",
-                                "opacity": 0.6
-                            },
-                            "encoding": {
-                                "x": {
-                                    "field": "distance",
-                                    "type": "quantitative",
-                                    "title": "Distance from CBD (m)"
-                                },
-                                "y": {
-                                    "field": "review_count",
-                                    "type": "quantitative",
-                                    "title": "Review Count"
-                                },
-                                "color": {
-                                    "field": "rating",
-                                    "type": "quantitative",
-                                    "title": "Average Rating",
-                                    "scale": {"scheme": "viridis"}
-                                },
-                                "tooltip": [
-                                    {"field": "name", "type": "nominal", "title": "Pub Name"},
-                                    {"field": "distance", "type": "quantitative", "title": "Distance from CBD (m)"},
-                                    {"field": "review_count", "type": "quantitative", "title": "Review Count"},
-                                    {"field": "rating", "type": "quantitative", "title": "Avg Rating"}
-                                ]
-                            }
-                        }
-                    ]
-                },
-                {
-                    "width": 600,
-                    "height": 120,
-                    "mark": "line",
-                    "params": [
-                        {
-                            "name": "brush",
-                            "select": { "type": "interval", "encodings": ["x"] }
-                        }
-                    ],
-                    "encoding": {
-                        "x": {
-                            "field": "distance",
-                            "type": "quantitative",
-                            "title": "Distance from CBD (m)"
-                        },
-                        "y": {
-                            "field": "review_count",
-                            "type": "quantitative",
-                            "title": "Review Count"
-                        }
-                    }
-                },
-                // Bar Chart with annonation
-                {
-                "width": 600,
-                "height": 300,
-                "layer": [
-                    {
-                    "mark": "bar",
-                    "encoding": {
-                        "x": {
-                        "field": "rating",
-                        "type": "ordinal",
-                        "title": "Average Rating"
-                        },
-                        "y": {
-                        "aggregate": "count",
-                        "type": "quantitative",
-                        "title": "Number of Pubs"
-                        },
-                        "color": {
-                        "field": "rating",
-                        "type": "ordinal",
-                        "scale": { "scheme": "blues" }
-                        },
-                        "tooltip": [
-                        { "field": "rating", "type": "ordinal", "title": "Rating" },
-                        { "aggregate": "count", "type": "quantitative", "title": "Number of Pubs" }
-                        ]
-                    }
-                    },
-                    {
-                    "transform": [
-                        {
-                        "aggregate": [{ "op": "count", "as": "pub_count" }],
-                        "groupby": ["rating"]
-                        },
-                        {
-                        "window": [{ "op": "rank", "as": "rank" }],
-                        "sort": [{ "field": "pub_count", "order": "descending" }]
-                        },
-                        {
-                        "filter": "datum.rank == 1"
-                        },
-                        {
-                        "calculate": "'Most common Yelp review count: ' + datum.pub_count",
-                        "as": "text_annotation"
-                        },
-                    ],
-                    "mark": {
-                        "type": "text",
-                        "align": "center",
-                        "fontWeight": "bold",
-                        "color": "black"
-                    },
-                    "encoding": {
-                        "x": { "field": "rating", "type": "ordinal" },
-                        "y": { "field": "pub_count", "type": "quantitative" },
-                        "text": { "field": "text_annotation", "type": "nominal" }
-                    }
-                    }
-                ]
-                }
 
-            ]
-        };
+<h1>Pubs in Melbourne</h1>
 
-        vegaEmbed("#vis", spec, {mode: "vega-lite"}).then(console.log).catch(console.warn);
-    </script>
+<div class="map-text">
+  <div class="text">
+    <h2>Context</h2>
+    <p>Here, 500 pubs which have been reviewed on Yelp are displayed.<br>
+        The colour of each dot represents the average rating on Yelp. <br>
+        The main focus of these reviews are centered around Melbourne's CBD. 
+    
+    </p>
+  </div>
+  <div id="vis"></div>
+</div>
+
+<div id="vis2"></div>
+<div id="vis3"></div>
+
+<script>
+ 
+  const spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Pubs around Melbourne (Yelp)",
+    "width": 750,
+    "height": 750,
+    "projection": {"type": "mercator"},
+    "layer": [
+      {
+        "data": {
+          "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Week-9-Homework/js/SA2_2021_AUST_GDA2020.json",
+          "format": {
+            "type": "topojson",
+            "feature": "SA2_2021_AUST_GDA2020"
+          }
+        },
+        "mark": {
+          "type": "geoshape",
+          "fill": "lightgray",
+          "stroke": "white"
+        }
+      },
+      {
+        "data": {
+          "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Week-9-Homework/data/Yelp_500_PUBS.csv"
+        },
+        "mark": {
+          "type": "circle",
+          "tooltip": {"content": "data"}
+        },
+        "encoding": {
+          "longitude": {"field": "longitude", "type": "quantitative"},
+          "latitude": {"field": "latitude", "type": "quantitative"},
+          "color": {
+            "field": "rating",
+            "type": "quantitative",
+            "title": "Yelp Rating",
+            "scale": {"range": ["#FFD700", "#006400"]}
+          },
+          "tooltip": [
+            { "field": "name", "type": "nominal", "title": "Name" },
+            { "field": "latitude", "type": "quantitative", "title": "Latitude" },
+            { "field": "longitude", "type": "quantitative", "title": "Longitude" },
+            { "field": "review_count", "type": "quantitative", "title": "Review Count" }
+          ]
+        }
+      }
+    ]
+  };
+
+ 
+  const spec2 = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Bars & Pubs by Patron Capacity",
+    "width": 750,
+    "height": 400,
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Week-9-Homework/data/Yelp_500_PUBS.csv"
+    },
+    "mark": {
+      "type": "circle",
+      "opacity": 0.6
+    },
+    "encoding": {
+      "x": {
+        "field": "latitude",
+        "type": "quantitative",
+        "title": "Latitude",
+        "scale": { "domain": [-38, -37.6] }
+      },
+      "y": {
+        "field": "review_count",
+        "type": "quantitative",
+        "title": "Review Count"
+      },
+      "tooltip": [
+            { "field": "name", "type": "nominal", "title": "Name" },
+            { "field": "latitude", "type": "quantitative", "title": "Latitude" },
+            { "field": "longitude", "type": "quantitative", "title": "Longitude" },
+            { "field": "review_count", "type": "quantitative", "title": "Review Count" }
+          ]
+    }
+  };
+
+  
+  const spec3 = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Distribution of Yelp Price ",
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Week-9-Homework/data/Yelp_500_PUBS.csv"
+    },
+    "width": 600,
+    "height": 300,
+    "layer": [
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "price",
+            "type": "ordinal",
+            "title": "Price Score"
+          },
+          "y": {
+            "aggregate": "count",
+            "type": "quantitative",
+            "title": "Number of Pubs"
+          },
+          "color": {
+            "field": "rating",
+            "type": "ordinal",
+            "scale": { "scheme": "blues" }
+          },
+          "tooltip": [
+            { "field": "rating", "type": "ordinal", "title": "Rating" },
+            { "aggregate": "count", "type": "quantitative", "title": "Number of Pubs" }
+          ]
+        }
+      },
+      {
+        "transform": [
+          {
+            "aggregate": [{ "op": "count", "as": "pub_count" }],
+            "groupby": ["rating"]
+          },
+          {
+            "window": [{ "op": "rank", "as": "rank" }],
+            "sort": [{ "field": "pub_count", "order": "descending" }]
+          },
+          {
+            "filter": "datum.rank == 1"
+          },
+          {
+            "calculate": "'Most common rating: ' + datum.pub_count",
+            "as": "text_annotation"
+          }
+        ],
+        "mark": {
+          "type": "text",
+          "align": "center",
+          "fontWeight": "bold",
+          "color": "black"
+        },
+        "encoding": {
+          "x": { "field": "rating", "type": "ordinal" },
+          "y": { "field": "pub_count", "type": "quantitative" },
+          "text": { "field": "text_annotation", "type": "nominal" }
+        }
+      }
+    ]
+  };
+
+  
+  vegaEmbed("#vis", spec, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+  vegaEmbed("#vis2", spec2, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+  vegaEmbed("#vis3", spec3, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+</script>
+
 </body>
 </html>
