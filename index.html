@@ -165,18 +165,18 @@
       {
         "transform": [
           {
-            "aggregate": [{ "op": "count", "as": "pub_count" }],
-            "groupby": ["rating"]
+            "aggregate": [{ "op": "count", "as": "price_count" }],
+            "groupby": ["price"]
           },
           {
             "window": [{ "op": "rank", "as": "rank" }],
-            "sort": [{ "field": "pub_count", "order": "descending" }]
+            "sort": [{ "field": "price_count", "order": "descending" }]
           },
           {
             "filter": "datum.rank == 1"
           },
           {
-            "calculate": "'Most common rating: ' + datum.pub_count",
+            "calculate": "'Most common price: ' + datum.price_count",
             "as": "text_annotation"
           }
         ],
