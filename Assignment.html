@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pubs in Melbourne</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@6.2.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@7.0.2"></script>
+</head>
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 20px;
+    }
+    h1 {font-family: Arial, Helvetica, sans-serif;
+        font-size: 60px;
+        align-items: center;
+    }
+    .map&text {
+      display: flex;
+      gap: 20px; /* space between map and text */
+      align-items: flex-start; /* aligns items to top */
+    }
+    #vis {
+      flex: 2;
+    }
+
+</style>
+<body>
+    <h1>Pubs in Melbourne</h1>
+    <div id="map&text">
+  <div id="vis">
+    
+  <script>
+    const spec = { 
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Pubs around Melbourne",
+  "width": 900,
+  "height": 900,
+  "projection": {"type": "mercator"},
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Week-9-Homework/js/SA2_2021_AUST_GDA2020.json",
+        "format": {
+          "type": "topojson",
+          "feature": "SA2_2021_AUST_GDA2020"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "lightgray",
+        "stroke": "white"
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Week-9-Homework/data/Yelp_500_PUBS.csv"
+      },
+      "mark": {
+        "type": "circle",
+        "tooltip": {"content": "data"}
+      },
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        
+        "color": {
+          "field": "rating",
+          "type": "quantitative",
+          "title": "Yelp Rating",
+          "scale": {"range": ["#FFD700", "#006400"]}
+        }
+      }
+    }
+  ]
+
+   };
+
+    vegaEmbed("#vis", spec, { mode: "vega-lite" })
+      .then(console.log)
+      .catch(console.warn);
+  </script>
+  </div>
+  <div class="text">
+      <h2>Context</h2>
+      <p> Here 500 Pubs which have been reviewed on yelp are displayed</p>
+  </div>
+  </div>
+</body>
+</html>
