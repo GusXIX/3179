@@ -22,11 +22,32 @@
       justify-content: center;
       align-items: flex-start; 
       margin-top: 0;  
+      margin-bottom: 10px; 
     }
-    .map-text {
+    h2,h3{ margin-top: 0;  
+      margin-bottom: 10px; }
+    .map-text1,.map-text2 {
       display: flex;
       margin: 0 auto;   
       text-align: center;
+      justify-content: center;
+      align-items: flex-start; 
+      flex-wrap: wrap;             
+    gap: 20px;                    
+       margin-top: 0;  
+    font-size: 14px;  
+    margin-bottom: 10px;  
+    }
+    #Suburb-Price,#Suburb-Rating1,#Suburb-Rating2{
+      display: flex;
+      justify-content: center;
+      align-items: flex-start; 
+    }
+    #vis5, #vis6, #vis7 ,#vis8,#vis9,#vis10,#vis11,#vis12{
+      flex: 1;   
+      max-width: 100%;
+      max-width: 450x; 
+      display: flex;
       justify-content: center;
       align-items: flex-start; 
     }
@@ -38,27 +59,51 @@
       align-items: flex-start; 
     }
     .container {
-        max-width: 900px;   
+        max-width: 1250px;   
         margin: 0 auto;
-        padding: 20px;
+        
         background-color: #fff;
+        border: 3px solid #ccc;   
+        border-radius: 12px;      
 }
   </style>
 </head>
 <body>
 <div class="container">
 <h1>Pubs in Melbourne</h1>
-
-<div class="map-text">
+<div class="map-text1">
   <div class="text">
     <h2>Main Suburbs of the Investigation into Melbourne Pubs</h2>
     <p>Here, are the main inner suburbs which will be discussed.<br>
-        The colour of each dot represents the average rating on Yelp. <br>
-        The main focus of these reviews are centered around Melbourne's CBD. 
+        Being Fitzroy, Melbourne, Richmond & South Melbourne.    <br></p>
+        </div>
+        </div>
+<div id="Suburb-Rating1">
+  <div id="vis9"></div>
+  <div id="vis10"></div>
+</div>
+<div id="Suburb-Rating2">
+  <div id="vis11"></div>
+  <div id="vis12"></div>
+</div>
+<div class="map-text2">
+        <h3> Explanation of Yelp Price Rating</h3>   
+        <p>
+        $ (Inexpensive): Businesses with one dollar sign are typically the most budget-friendly.<br>
+        $$ (Moderate): These are mid-range priced options.<br>
+        $$$ (Expensive): Businesses in this category are pricier.<br>
+        $$$$ (Very Expensive): This represents the highest price tier.<br>
+
     
-    </p>
-  </div>
+        </p>
+        <h3>Distrubtion of Yelp Price Ratings by Suburb</h3>  
   
+</div>
+<div id="Suburb-Price">
+  <div id="vis5"></div>
+  <div id="vis6"></div>
+  <div id="vis7"></div>
+  <div id="vis8"></div>
 </div>
 <div id="vis"></div>
 <div id="vis2"></div>
@@ -89,7 +134,7 @@
       },
       {
         "data": {
-          "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Week-9-Homework/data/Yelp_500_PUBS.csv"
+          "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
         },
         "mark": {
           "type": "circle",
@@ -122,7 +167,7 @@
     "width": 750,
     "height": 400,
     "data": {
-      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Week-9-Homework/data/Yelp_500_PUBS.csv"
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
     },
     "mark": {
       "type": "circle",
@@ -154,7 +199,7 @@
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": "Distribution of Yelp Price ",
     "data": {
-      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Week-9-Homework/data/Yelp_500_PUBS.csv"
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
     },
     "width": 600,
     "height": 300,
@@ -218,43 +263,494 @@
  
   const spec4 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": "Distance Vs Rating",
+    "title": "Suburb Summaries of Fitzroy, St Kilda, Melbourne & Richmond",
     "width": 750,
     "height": 400,
     "data": {
-      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Week-9-Homework/data/Yelp_500_PUBS.csv"
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
     },
+    /*https://vega.github.io/vega-lite/docs/predicate.html
+    "transform": [
+    {
+      "filter": {
+        "field": "city",
+        "oneOf": ["Fitzroy", "St Kilda", "Melbourne", "Richmond", South Melbourne]
+      }
+    }
+  ],*/
     "mark": {
-      "type": "circle",
+      "type": "bar",
       "opacity": 0.6
     },
     "encoding": {
       "x": {
-        "field": "distance",
-        "type": "quantitative",
-        "title": "Distance from CBD(m)",
+        "field": "city",
+        "type": "nominal",
+        "title": "Suburb",
+        "sort": {
+          "op": "count",       
+          "field": "city",    
+          "order": "descending"
+        }
         
       },
       "y": {
-        "field": "rating",
+        "aggregate": "count",
         "type": "quantitative",
-        "title": "Average Rating"
+        "title": "Number of Pubs"
       },
+      
       "tooltip": [
-            { "field": "name", "type": "nominal", "title": "Name" },
-            { "field": "latitude", "type": "quantitative", "title": "Latitude" },
-            { "field": "longitude", "type": "quantitative", "title": "Longitude" },
-            { "field": "review_count", "type": "quantitative", "title": "Review Count" }
+            { "field": "city", "type": "nominal", "title": "City" },
+            { "aggregate": "count", "type": "quantitative", "title": "Number of Pubs" }
           ]
     }
   };
 
+    const spec5 = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Distribution of Yelp Price in Fitzroy ",
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+    "width": 150,
+    "height": 130,
+    "transform": [
+    {
+      "filter": {
+        "field": "city",
+        "oneOf": ["Fitzroy"]
+      }
+    },
+    {
+      "filter": {
+        "field": "price",
+        "oneOf": ["$","$$","$$$","$$$$"]
+      }
+    },
+  ],
+    "layer": [
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "price",
+            "type": "ordinal",
+            "title": "Price Score"
+          },
+          "y": {
+            "aggregate": "count",
+            "type": "quantitative",
+            "title": "Number of Pubs"
+          },
+          
+          "tooltip": [
+            { "field": "city", "type": "nominal", "title": "City" },
+            { "aggregate": "count", "type": "quantitative", "title": "Number of Pubs" }
+          ]
+        }
+      },
+      
+    ]
+  };
+const spec6 = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Distribution of Yelp Price in Melbourne ",
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+    "width": 150,
+    "height": 130,
+    "transform": [
+    {
+      "filter": {
+        "field": "city",
+        "oneOf": ["Melbourne"]
+      }
+    },
+        {
+      "filter": {
+        "field": "price",
+        "oneOf": ["$","$$","$$$","$$$$"]
+      }
+    },
+
+  ],
+    "layer": [
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "price",
+            "type": "ordinal",
+            "title": "Price Score"
+          },
+          "y": {
+            "aggregate": "count",
+            "type": "quantitative",
+            "title": "Number of Pubs"
+          },
+          
+          "tooltip": [
+            { "field": "city", "type": "nominal", "title": "City" },
+            { "aggregate": "count", "type": "quantitative", "title": "Number of Pubs" }
+          ]
+        }
+      },
+      
+    ]
+  };
+ const spec7 = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Distribution of Yelp Price in Richmond ",
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+    "width": 150,
+    "height": 130,
+    "transform": [
+    {
+      "filter": {
+        "field": "city",
+        "oneOf": ["Richmond"]
+      }
+    },
+            {
+      "filter": {
+        "field": "price",
+        "oneOf": ["$","$$","$$$","$$$$"]
+      }
+    },
+  ],
+    "layer": [
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "price",
+            "type": "ordinal",
+            "title": "Price Score"
+          },
+          "y": {
+            "aggregate": "count",
+            "type": "quantitative",
+            "title": "Number of Pubs"
+          },
+          
+          "tooltip": [
+            { "field": "city", "type": "nominal", "title": "City" },
+            { "aggregate": "count", "type": "quantitative", "title": "Number of Pubs" }
+          ]
+        }
+      },
+      
+    ]
+  };
+const spec8 = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Distribution of Yelp Price in South Melbourne ",
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+    "width": 150,
+    "height": 130,
+    "transform": [
+    {
+      "filter": {
+        "field": "city",
+        "oneOf": ["South Melbourne"]
+      }
+    },
+            {
+      "filter": {
+        "field": "price",
+        "oneOf": ["$","$$","$$$","$$$$"]
+      }
+    },
+  ],
+    "layer": [
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "price",
+            "type": "ordinal",
+            "title": "Price Score"
+          },
+          "y": {
+            "aggregate": "count",
+            "type": "quantitative",
+            "title": "Number of Pubs"
+          },
+          
+          "tooltip": [
+            { "field": "city", "type": "nominal", "title": "City" },
+            { "aggregate": "count", "type": "quantitative", "title": "Number of Pubs" }
+          ]
+        }
+      },
+      
+    ]
+  };
   
-  
+    const spec9 = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Distribution of Yelp Review Rating in Fitzroy ",
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+    "width": 150,
+    "height": 130,
+    "transform": [
+    {
+      "filter": {
+        "field": "city",
+        "oneOf": ["Fitzroy"]
+      }
+    },
+    {
+      "aggregate": [{"op": "count", "as": "count"}],
+      "groupby": ["city", "rating"]
+    },
+    {
+      "joinaggregate": [{"op": "sum", "field": "count", "as": "total"}],
+      "groupby": ["city"]
+    },
+    {
+      "calculate": "datum.count / datum.total",
+      "as": "proportion"
+    }
+    
+
+  ],
+    "layer": [
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "rating",
+            "type": "ordinal",
+            "title": "Rating",
+            "sort": ["2", "2.5", "3", "3.5", "4", "4.5", "5"], 
+          "scale": {"domain": ["2", "2.5", "3", "3.5", "4", "4.5", "5"]} 
+          },
+          "y": {
+            "title": "Proportion of Pubs",
+          "field": "proportion",
+          "type": "quantitative",
+             
+          "axis": {"format": ".0%"},  
+          
+
+          },
+          
+          "tooltip": [
+            { "field": "city", "type": "nominal", "title": "City" },
+            { "field": "count", "type": "quantitative", "title": "Number of Pubs" },
+            { "field": "proportion", "type": "quantitative", "title": "Proportion of Pubs","format": ".0%" }
+          ]
+        }
+      },
+      
+    ]
+  };
+    const spec10 = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Distribution of Yelp Review Rating in Melbourne ",
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+    "width": 150,
+    "height": 130,
+    "transform": [
+    {
+      "filter": {
+        "field": "city",
+        "oneOf": ["Melbourne"]
+      }
+    },
+    {
+      "aggregate": [{"op": "count", "as": "count"}],
+      "groupby": ["city", "rating"]
+    },
+    {
+      "joinaggregate": [{"op": "sum", "field": "count", "as": "total"}],
+      "groupby": ["city"]
+    },
+    {
+      "calculate": "datum.count / datum.total",
+      "as": "proportion"
+    }
+    
+
+  ],
+    "layer": [
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "rating",
+            "type": "ordinal",
+            "title": "Rating",
+            "sort": ["2", "2.5", "3", "3.5", "4", "4.5", "5"], 
+          "scale": {"domain": ["2", "2.5", "3", "3.5", "4", "4.5", "5"]} 
+          },
+          "y": {
+            "title": "Proportion of Pubs",
+          "field": "proportion",
+          "type": "quantitative",
+             
+          "axis": {"format": ".0%"},  
+          
+
+          },
+          
+          "tooltip": [
+            { "field": "city", "type": "nominal", "title": "City" },
+            { "field": "count", "type": "quantitative", "title": "Number of Pubs" },
+            { "field": "proportion", "type": "quantitative", "title": "Proportion of Pubs","format": ".0%" }
+          ]
+        }
+      },
+      
+    ]
+  }; 
+      const spec11 = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Distribution of Yelp Review Rating in Richmond ",
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+    "width": 150,
+    "height": 130,
+    "transform": [
+    {
+      "filter": {
+        "field": "city",
+        "oneOf": ["Richmond"]
+      }
+    },
+    {
+      "aggregate": [{"op": "count", "as": "count"}],
+      "groupby": ["city", "rating"]
+    },
+    {
+      "joinaggregate": [{"op": "sum", "field": "count", "as": "total"}],
+      "groupby": ["city"]
+    },
+    {
+      "calculate": "datum.count / datum.total",
+      "as": "proportion"
+    }
+    
+
+  ],
+    "layer": [
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "rating",
+            "type": "ordinal",
+            "title": "Rating",
+            "sort": ["2", "2.5", "3", "3.5", "4", "4.5", "5"], 
+          "scale": {"domain": ["2", "2.5", "3", "3.5", "4", "4.5", "5"]} 
+          },
+          "y": {
+            "title": "Proportion of Pubs",
+          "field": "proportion",
+          "type": "quantitative",
+             
+          "axis": {"format": ".0%"},  
+          
+
+          },
+          
+          "tooltip": [
+            { "field": "city", "type": "nominal", "title": "City" },
+            { "field": "count", "type": "quantitative", "title": "Number of Pubs" },
+            { "field": "proportion", "type": "quantitative", "title": "Proportion of Pubs","format": ".0%" }
+          ]
+        }
+      },
+      
+    ]
+  }; 
+      const spec12 = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Distribution of Yelp Review Rating in South Melbourne ",
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+    "width": 150,
+    "height": 130,
+    "transform": [
+    {
+      "filter": {
+        "field": "city",
+        "oneOf": ["South Melbourne"]
+      }
+    },
+    {
+      "aggregate": [{"op": "count", "as": "count"}],
+      "groupby": ["city", "rating"]
+    },
+    {
+      "joinaggregate": [{"op": "sum", "field": "count", "as": "total"}],
+      "groupby": ["city"]
+    },
+    {
+      "calculate": "datum.count / datum.total",
+      "as": "proportion"
+    },
+
+    
+
+  ],
+    "layer": [
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "rating",
+             "type": "nominal", 
+            "title": "Rating",
+            /*Making Sure all numbers show up for better comparison*/
+           "sort": ["2", "2.5", "3", "3.5", "4", "4.5", "5"], 
+          "scale": {"domain": ["2", "2.5", "3", "3.5", "4", "4.5", "5"]} 
+          },
+          "y": {
+            "title": "Proportion of Pubs",
+          "field": "proportion",
+          "type": "quantitative",
+             
+          "axis": {"format": ".0%"},  
+          
+
+          },
+          
+          "tooltip": [
+            { "field": "city", "type": "nominal", "title": "City" },
+            { "field": "count", "type": "quantitative", "title": "Number of Pubs" },
+            { "field": "proportion", "type": "quantitative", "title": "Proportion of Pubs","format": ".0%" }
+          ]
+        }
+      },
+      
+    ]
+  }; 
   vegaEmbed("#vis", spec, { mode: "vega-lite" }).then(console.log).catch(console.warn);
   vegaEmbed("#vis2", spec2, { mode: "vega-lite" }).then(console.log).catch(console.warn);
   vegaEmbed("#vis3", spec3, { mode: "vega-lite" }).then(console.log).catch(console.warn);
-  vegaEmbed("#vis4", spec3, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+  vegaEmbed("#vis4", spec4, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+  vegaEmbed("#vis5", spec5, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+  vegaEmbed("#vis6", spec6, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+  vegaEmbed("#vis7", spec7, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+  vegaEmbed("#vis8", spec8, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+  vegaEmbed("#vis9", spec9, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+  vegaEmbed("#vis10", spec10, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+  vegaEmbed("#vis11", spec11, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+  vegaEmbed("#vis12", spec12, { mode: "vega-lite" }).then(console.log).catch(console.warn);
 </script>
 </div>
 </body>
