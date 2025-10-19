@@ -7,39 +7,60 @@
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.1.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@7.0.2"></script>
   <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      margin: 20px;
+    html, body {
+      font-family:  Helvetica, sans-serif;
+    
+      background-color: #e7e3e3;
+               
+      display: flex;
+      justify-content: center;
+      align-items: flex-start; 
     }
     h1 {
       font-size: 60px;
+       display: flex;
+      justify-content: center;
+      align-items: flex-start; 
+      margin-top: 0;  
     }
     .map-text {
       display: flex;
-      gap: 20px;
-      align-items: flex-start;
+      margin: 0 auto;   
+      text-align: center;
+      justify-content: center;
+      align-items: flex-start; 
     }
     #vis, #vis2, #vis3 ,#vis4{
       margin-top: 40px;
+       max-width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start; 
     }
+    .container {
+        max-width: 900px;   
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+}
   </style>
 </head>
 <body>
-
+<div class="container">
 <h1>Pubs in Melbourne</h1>
 
 <div class="map-text">
   <div class="text">
-    <h2>Context</h2>
-    <p>Here, 500 pubs which have been reviewed on Yelp are displayed.<br>
+    <h2>Main Suburbs of the Investigation into Melbourne Pubs</h2>
+    <p>Here, are the main inner suburbs which will be discussed.<br>
         The colour of each dot represents the average rating on Yelp. <br>
         The main focus of these reviews are centered around Melbourne's CBD. 
     
     </p>
   </div>
-  <div id="vis"></div>
+  
 </div>
-
+<div id="vis"></div>
 <div id="vis2"></div>
 <div id="vis3"></div>
 <div id="vis4"></div>
@@ -48,8 +69,8 @@
   const spec = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": "Pubs around Melbourne (Yelp)",
-    "width": 750,
-    "height": 750,
+    "width": 600,
+    "height": 600,
     "projection": {"type": "mercator"},
     "layer": [
       {
@@ -233,8 +254,8 @@
   vegaEmbed("#vis", spec, { mode: "vega-lite" }).then(console.log).catch(console.warn);
   vegaEmbed("#vis2", spec2, { mode: "vega-lite" }).then(console.log).catch(console.warn);
   vegaEmbed("#vis3", spec3, { mode: "vega-lite" }).then(console.log).catch(console.warn);
-  //vegaEmbed("#vis4", spec3, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+  vegaEmbed("#vis4", spec3, { mode: "vega-lite" }).then(console.log).catch(console.warn);
 </script>
-
+</div>
 </body>
 </html>
