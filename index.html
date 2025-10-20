@@ -109,6 +109,7 @@
 <div id="Suburb-Rating1">
 
   <div id="vis13"></div>
+  <div id="vis24"></div>
 </div>
 <div class="middle-text">
  <h3>Distrubtion of Yelp Price Ratings by Suburb</h3>
@@ -135,13 +136,17 @@
   <div id="vis7"></div>
   <div id="vis8"></div>
 </div>
-<div id="vis"></div>
+
+  <div id="vis" style=" border: 1px solid #ccc; "></div>
+  <div id="vis-map"  style="border: 1px solid #ccc;"></div>
 
 <div id="vis3"></div>
 <div id="vis20"></div>
 <div id="vis21"></div>
 <div id="vis22"></div>
 <div id="vis23"></div>
+
+
 <script>
  //Map - Add graticules, ocean, filtering annotations
 const spec = {
@@ -224,7 +229,85 @@ const spec = {
     }
   ]
 };
+const specmap2 = {
+  // Used Week 9 ACT 3 has an example
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Pubs around Melbourne (Yelp)",
+  "width": 800,
+  "height": 600,
 
+  "params": [
+    {
+      "name": "Price_Selection",
+      "value": "$$",
+      "bind": {
+        "input": "select",
+        "options": ["$", "$$", "$$$","$$$$"],
+        
+        "name": "Price: "
+      }
+    }
+  ],
+
+  "projection": {
+    "type": "mercator",
+    "center": [144.9631, -37.8136],  // Melbourne center
+    "scale": 40000
+  },
+
+  "layer": [
+    // TopoJSON background
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Week-9-Homework/js/SA2_2021_AUST_GDA2020.json",
+        "format": {
+          "type": "topojson",
+          "feature": "SA2_2021_AUST_GDA2020"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#ddd",
+        "stroke": "white",
+        "strokeWidth": 1
+      }
+    },
+
+    // Pubs points
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+      },
+      "transform": [
+        
+        {"filter": "datum.price === Price_Selection"}
+      ],
+      "mark": {
+        "type": "circle",
+        "tooltip": {"content": "data"},
+        "stroke": "#333",
+        "strokeWidth": 0.5
+      },
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        "color": {
+          
+          "value": "#39FF14" 
+        },
+        "size": {"value": 50},
+        "tooltip": [
+          {"field": "name", "type": "nominal", "title": "Name"},
+          {"field": "rating", "type": "quantitative", "title": "Rating"},
+          {"field": "review_count", "type": "quantitative", "title": "Review Count"},
+          {"field": "latitude", "type": "quantitative"},
+          {"field": "longitude", "type": "quantitative"},
+          {"field": "price", "type": "nominal","title":"Yelp Price"}
+        ]
+      }
+    }
+  ]
+};
 
 
 
@@ -594,7 +677,11 @@ const spec8 = {
   ],
     "layer": [
       {
-        "mark": "bar",
+        "mark": {
+          "type": "bar",
+          "color": "#FFD700"
+        },
+        
         "opacity": 0.4, 
          "width": 200 ,   
         "encoding": {
@@ -618,7 +705,8 @@ const spec8 = {
             { "field": "city", "type": "nominal", "title": "City" },
             { "field": "count", "type": "quantitative", "title": "Number of Pubs" },
             { "field": "proportion", "type": "quantitative", "title": "Proportion of Pubs","format": ".0%" }
-          ]
+          ],
+          
         }
       },
 
@@ -714,7 +802,10 @@ const spec8 = {
   ],
     "layer": [
       {
-        "mark": "bar",
+                "mark": {
+          "type": "bar",
+          "color": "#4169e1"
+        },
         "opacity": 0.4, 
          "width": 200 ,   
         "encoding": {
@@ -833,7 +924,10 @@ const spec8 = {
   ],
     "layer": [
       {
-        "mark": "bar",
+           "mark": {
+          "type": "bar",
+          "color": "black"
+        },
         "opacity": 0.4, 
          "width": 200 ,   
         "encoding": {
@@ -953,7 +1047,10 @@ const spec8 = {
   ],
     "layer": [
       {
-        "mark": "bar",
+           "mark": {
+          "type": "bar",
+          "color": "#E1251B"
+        },
         "opacity": 0.4, 
          "width": 200 ,   
         "encoding": {
@@ -1522,54 +1619,115 @@ const spec23 = {
 const spec24 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": "Demographics of Key Suburbs ",
+  
     "data": {
       "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Demographics.csv"
     },
-    "width": 600,
-    "height": 600,
+    "width": 325,
+    "height": 300,
     "params": [
   {
     "name": "xAxisField",
-    "value": "Tot_P_P",  // default field
+    "value": "over_18s",  
     "bind": {
       "input": "select",
-      "options": [ 
-            {"value": "Tot_P_M", "label": "Male Population"},
-            {"value": "Tot_P_F", "label": "Female Population"},
-            {"value": "Tot_P_P", "label": "Total Population"}],
-
+       "options": ["Tot_P_M", "Tot_P_F", "Tot_P_P","over_18s"],
+        "labels": ["Total Male Population", "Total Female Population", "Total Population", "Over 18 Population"],
       "name": "X-axis:"
     }
-  }
-    ],
-
-    
-  
-    "layer": [
+  },
+    {
+    "name": "yAxisField",
+    "value": "Median_age_persons",  
+    "bind": {
+      "input": "select",
+       "options": ["Median_age_persons", "Median_mortgage_repay_monthly", "Median_tot_prsnl_inc_weekly","Median_rent_weekly"],
+        "labels": ["Median Age", "Median Monthly Mortgage Repayment", "Median Weekly Personal Income","Median Weekly Rent"],
+      "name": "Y-axis:"
+    }
+  },
       {
+    "name": "sizeAxisField",
+    "value": "Average_household_size",  
+    "bind": {
+      "input": "select",
+       "options": ["Average_household_size", "Australian_Born", "High_School","Average_num_psns_per_bedroom"],
+        "labels": ["Average Household Size", "Percentage of Australian Born Residents", "Percentage of High School Graduates","Average Number of Bedrooms"],
+      "name": "Size:"
+    }
+  },
+    ],
+        "transform": [
+    {
+      "filter": {
+        "field": "city",
+        "oneOf": ["Fitzroy", "Melbourne", "Richmond", "South Melbourne"]
+      }
+    },
+    {
+      "calculate": "datum[xAxisField]",
+      "as": "xVal"
+    },
+        {
+      "calculate": "datum[yAxisField]",
+      "as": "yVal"
+    },
+      {
+      "calculate": "datum[sizeAxisField]",
+      "as": "sizeVal"
+    },
+
+  ],  
+      
         "mark": "circle",
         "encoding": {
       "x": {
   
-      "field": "xAxisField",
-      "title": "xAxisField"
+      "field": "xVal",
+      "type": "quantitative",
+      "title": "xVal",
+      "axis": {"title": {"expr": "xAxisField"}, "titleFontSize": 12}
+     
           },
           "y": {
-            "field": "Median_age_persons",
-            "type": "quantitative",
-            "title": "Median Age"
+            "field": "yVal",
+      "type": "quantitative",
+      "axis": {"title": {"expr": "yAxisField"}, "titleFontSize": 10}
           },
           
           "tooltip": [
-            { "field": "city", "type": "nominal", "title": "City" },
-            { "aggregate": "count", "type": "quantitative", "title": "Number of Pubs" }
-          ]
-        }
-      },
-      
-    ]
+            { "field": "city", "type": "nominal", "title": "City: " },
+            { "field": "Tot_P_M", "type": "quantitative", "title": "Male Population: " },
+            { "field": "Tot_P_F", "type": "quantitative", "title": "Female Population: " },
+            { "field": "Tot_P_P", "type": "quantitative", "title": "Total Population: " },
+            { "field": "Median_age_persons", "type": "quantitative", "title": "Median Age: " },
+            { "field": "Median_mortgage_repay_monthly", "type": "quantitative", "title": "Median Monthly Mortgage Repayment: ","format": "$.2f" },
+            { "field": "Median_tot_prsnl_inc_weekly", "type": "quantitative", "title": "Median Weekly Personal Income: ","format": "$.2f" },
+            { "field": "Median_rent_weekly", "type": "quantitative", "title": "Median Weekly Rent:","format": "$.2f" },
+          ],
+          "color":{
+            "field": "city",
+            "scale": {
+            "domain": ["Fitzroy", "Melbourne", "Richmond", "South Melbourne"],
+            "range": ["#FFD700", "#4169e1", "black","#E1251B"]
+          },
+          },
+          "size": {
+              "field": "sizeVal",
+              "type": "quantitative",
+              "axis": {"title": {"expr": "sizeAxisField"}},
+                "scale": {
+                "zero": false,
+                "range": [100, 750]  
+              },
+            },
+
+        }    
   };
+
+
 vegaEmbed("#vis", spec, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+vegaEmbed("#vis-map", specmap2, { mode: "vega-lite" }).then(console.log).catch(console.warn);
   vegaEmbed("#vis3", spec3, { mode: "vega-lite" }).then(console.log).catch(console.warn);
   vegaEmbed("#vis4", spec4, { mode: "vega-lite" }).then(console.log).catch(console.warn);
   vegaEmbed("#vis5", spec5, { mode: "vega-lite" }).then(console.log).catch(console.warn);
@@ -1582,6 +1740,8 @@ vegaEmbed("#vis", spec, { mode: "vega-lite" }).then(console.log).catch(console.w
     vegaEmbed("#vis21", spec21, { mode: "vega-lite" }).then(console.log).catch(console.warn);
         vegaEmbed("#vis22", spec22, { mode: "vega-lite" }).then(console.log).catch(console.warn);
             vegaEmbed("#vis23", spec23, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+            vegaEmbed("#vis24", spec24, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+                        //vegaEmbed("#vis25", spec25, { mode: "vega-lite" }).then(console.log).catch(console.warn);
 </script>
 </div>
 </body>
