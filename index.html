@@ -138,7 +138,10 @@
 <div id="vis"></div>
 
 <div id="vis3"></div>
-<div id="vis4"></div>
+<div id="vis20"></div>
+<div id="vis21"></div>
+<div id="vis22"></div>
+<div id="vis23"></div>
 <script>
  //Map - Add graticules, ocean, filtering annotations
 const spec = {
@@ -1363,22 +1366,17 @@ const spec20 = {
         "oneOf": ["Fitzroy"]
       }
     },
-    {
-      "filter": {
-        "field": "price",
-        "oneOf": ["$","$$","$$$","$$$$"]
-      }
-    },
+
     
   ],
     "layer": [
       {
         "mark": "bar",
         "encoding": {
-          "x": {
-            "field": "price",
-            "type": "ordinal",
-            "title": "Price Score"
+      "x": {
+      "bin": true,
+      "field": "review_count",
+      "title": "Review Count"
           },
           "y": {
             "aggregate": "count",
@@ -1395,8 +1393,182 @@ const spec20 = {
       
     ]
   };
+const spec21 = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Distribution of Review Count in Melbourne ",
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+    "width": 150,
+    "height": 130,
+    "transform": [
+    {
+      "filter": {
+        "field": "city",
+        "oneOf": ["Melbourne"]
+      }
+    },
 
+    
+  ],
+    "layer": [
+      {
+        "mark": "bar",
+        "encoding": {
+      "x": {
+      "bin": true,
+      "field": "review_count",
+      "title": "Review Count"
+          },
+          "y": {
+            "aggregate": "count",
+            "type": "quantitative",
+            "title": "Number of Pubs"
+          },
+          
+          "tooltip": [
+            { "field": "city", "type": "nominal", "title": "City" },
+            { "aggregate": "count", "type": "quantitative", "title": "Number of Pubs" }
+          ]
+        }
+      },
+      
+    ]
+  };
+const spec22 = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Distribution of Review Count in Richmond ",
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+    "width": 150,
+    "height": 130,
+    "transform": [
+    {
+      "filter": {
+        "field": "city",
+        "oneOf": ["Richmond"]
+      }
+    },
 
+    
+  ],
+    "layer": [
+      {
+        "mark": "bar",
+        "encoding": {
+      "x": {
+      "bin": true,
+      "field": "review_count",
+      "title": "Review Count"
+          },
+          "y": {
+            "aggregate": "count",
+            "type": "quantitative",
+            "title": "Number of Pubs"
+          },
+          
+          "tooltip": [
+            { "field": "city", "type": "nominal", "title": "City" },
+            { "aggregate": "count", "type": "quantitative", "title": "Number of Pubs" }
+          ]
+        }
+      },
+      
+    ]
+  };
+const spec23 = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Distribution of Review Count in South Melbourne ",
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+    "width": 150,
+    "height": 130,
+    "transform": [
+    {
+      "filter": {
+        "field": "city",
+        "oneOf": ["South Melbourne"]
+      }
+    },
+
+    
+  ],
+    "layer": [
+      {
+        "mark": "bar",
+        "encoding": {
+      "x": {
+      "bin": true,
+      "field": "review_count",
+      "title": "Review Count"
+          },
+          "y": {
+            "aggregate": "count",
+            "type": "quantitative",
+            "title": "Number of Pubs"
+          },
+          
+          "tooltip": [
+            { "field": "city", "type": "nominal", "title": "City" },
+            { "aggregate": "count", "type": "quantitative", "title": "Number of Pubs" }
+          ]
+        }
+      },
+      
+    ]
+  };
+const spec24 = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Demographics of Key Suburbs ",
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Demographics.csv"
+    },
+    "width": 600,
+    "height": 600,
+    "params": [
+  {
+    "name": "xAxisField",
+    "value": "Tot_P_P",  // default field
+    "bind": {
+      "input": "select",
+      "options": [ 
+            {"value": "Tot_P_M", "label": "Male Population"},
+            {"value": "Tot_P_F", "label": "Female Population"},
+            {"value": "Tot_P_P", "label": "Total Population"}],
+
+      "name": "X-axis:"
+    }
+  }
+    ],
+
+    
+  
+    "layer": [
+      {
+        "mark": "circle",
+        "encoding": {
+      "x": {
+  
+      "field": "xAxisField",
+      "title": "xAxisField"
+          },
+          "y": {
+            "field": "Median_age_persons",
+            "type": "quantitative",
+            "title": "Median Age"
+          },
+          
+          "tooltip": [
+            { "field": "city", "type": "nominal", "title": "City" },
+            { "aggregate": "count", "type": "quantitative", "title": "Number of Pubs" }
+          ]
+        }
+      },
+      
+    ]
+  };
 vegaEmbed("#vis", spec, { mode: "vega-lite" }).then(console.log).catch(console.warn);
   vegaEmbed("#vis3", spec3, { mode: "vega-lite" }).then(console.log).catch(console.warn);
   vegaEmbed("#vis4", spec4, { mode: "vega-lite" }).then(console.log).catch(console.warn);
@@ -1406,7 +1578,10 @@ vegaEmbed("#vis", spec, { mode: "vega-lite" }).then(console.log).catch(console.w
   vegaEmbed("#vis8", spec8, { mode: "vega-lite" }).then(console.log).catch(console.warn);
   vegaEmbed("#vis13", spec13, { mode: "vega-lite" }).then(console.log).catch(console.warn);
   vegaEmbed("#vis18", spec18, { mode: "vega-lite" }).then(console.log).catch(console.warn);
-  
+    vegaEmbed("#vis20", spec20, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+    vegaEmbed("#vis21", spec21, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+        vegaEmbed("#vis22", spec22, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+            vegaEmbed("#vis23", spec23, { mode: "vega-lite" }).then(console.log).catch(console.warn);
 </script>
 </div>
 </body>
