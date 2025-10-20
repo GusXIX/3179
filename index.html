@@ -24,8 +24,22 @@
       margin-top: 0;  
       margin-bottom: 10px; 
     }
-    h2,h3{ margin-top: 0;  
-      margin-bottom: 10px; }
+    h2{ margin-top: 0;  
+      margin-bottom: 10px; 
+    justify-content: left;
+      align-items: flex-start;
+    }
+        h3{ margin-top: 0;  
+      margin-bottom: 10px; 
+    justify-content: center;
+      align-items: flex-start;
+      display: flex;
+    }
+    .middle-text{margin-top: 0;  
+      margin-bottom: 10px; 
+    justify-content: center;
+      align-items: flex-start;
+      display: flex;}
     .map-text1 {
       display: flex;
       margin: 0 auto;   
@@ -44,10 +58,10 @@
       justify-content: left;
       align-items: flex-start; 
       flex-wrap: wrap;             
-    gap: 20px;                    
+    gap: 5px;                    
        margin-top: 0;  
     font-size: 14px;  
-    margin-bottom: 10px;  
+    margin-bottom: 0px;  
     }
     .text {
   flex: 1;                 /* take remaining space for text */
@@ -96,7 +110,9 @@
 
   <div id="vis13"></div>
 </div>
- <h3>Distrubtion of Yelp Price Ratings by Suburb</h3><br>
+<div class="middle-text">
+ <h3>Distrubtion of Yelp Price Ratings by Suburb</h3>
+ </div>
 <div class="map-text2">
  
   <div id="vis18"></div>
@@ -1308,11 +1324,77 @@ const spec14 = {/*https://stackoverflow.com/questions/58600526/vega-lite-wilkins
     {
       "vconcat": [
        spec15,      // Melbourne   
-       //spec19 ,      //dist graph
+       
+       
        ]
-    }
+    },
+    /*{"hconcat": [
+
+    {"vconcat": [
+        
+         spec5,       // Fitzroy   
+        spec6,      // Melbourne
+             
+      ]},
+          {"vconcat": [
+        
+         spec7,       // Richmond   
+        spec8,      // South Melbourne
+             
+      ]},
+    ]}*/
+
   ]
 };
+
+
+const spec20 = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Distribution of Review Count in Fitzroy ",
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+    "width": 150,
+    "height": 130,
+    "transform": [
+    {
+      "filter": {
+        "field": "city",
+        "oneOf": ["Fitzroy"]
+      }
+    },
+    {
+      "filter": {
+        "field": "price",
+        "oneOf": ["$","$$","$$$","$$$$"]
+      }
+    },
+    
+  ],
+    "layer": [
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "price",
+            "type": "ordinal",
+            "title": "Price Score"
+          },
+          "y": {
+            "aggregate": "count",
+            "type": "quantitative",
+            "title": "Number of Pubs"
+          },
+          
+          "tooltip": [
+            { "field": "city", "type": "nominal", "title": "City" },
+            { "aggregate": "count", "type": "quantitative", "title": "Number of Pubs" }
+          ]
+        }
+      },
+      
+    ]
+  };
 
 
 vegaEmbed("#vis", spec, { mode: "vega-lite" }).then(console.log).catch(console.warn);
