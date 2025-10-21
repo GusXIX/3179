@@ -79,7 +79,7 @@
       justify-content: center;
       align-items: flex-start; 
     }
-    #vis, #vis2, #vis3 ,#vis4{
+    #vis, #vis2, #vis3 ,#vis4,#vis-one{
       margin-top: 40px;
        max-width: 100%;
       display: flex;
@@ -99,6 +99,14 @@
 <body>
 <div class="container">
 <h1>Pubs in Melbourne</h1>
+<div class="map-text1">
+  <div class="text">
+    <h2>Charateristics  of Melbourne Pubs</h2>
+    <p>Here, are the main inner suburbs which will be discussed.<br>
+        Being Fitzroy, Melbourne, Richmond & South Melbourne.    <br></p>
+        </div>
+        </div>
+<div id="vis-one"></div>
 <div class="map-text1">
   <div class="text">
     <h2>Main Suburbs of the Investigation into Melbourne Pubs</h2>
@@ -145,8 +153,8 @@
 <div id="vis21"></div>
 <div id="vis22"></div>
 <div id="vis23"></div>
-
-
+<div id="vis25"></div>
+<div id="vis26"></div>
 <script>
  //Map - Add graticules, ocean, filtering annotations
 const spec = {
@@ -310,7 +318,6 @@ const specmap2 = {
 };
 
 
-
 //Ignore 
   const spec2 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -352,11 +359,20 @@ const specmap2 = {
     "data": {
       "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
     },
-    "width": 600,
+    "width": 300,
     "height": 300,
+
     "layer": [
+
       {
-        "mark": "bar",
+            "transform": [{"filter": {
+        "field": "price",
+        "oneOf": ["$","$$","$$$","$$$$"]
+      },}],
+        "mark": {
+          "type": "bar",
+          
+        },
         "encoding": {
           "x": {
             "field": "price",
@@ -368,47 +384,43 @@ const specmap2 = {
             "type": "quantitative",
             "title": "Number of Pubs"
           },
-          "color": {
-            "field": "rating",
-            "type": "ordinal",
-            "scale": { "scheme": "oranges" }
-          },
+
           "tooltip": [
-            { "field": "rating", "type": "ordinal", "title": "Rating" },
+            
             { "aggregate": "count", "type": "quantitative", "title": "Number of Pubs" }
-          ]
-        }
-      },
-      {
-        "transform": [
-          {
-            "aggregate": [{ "op": "count", "as": "price_count" }],
-            "groupby": ["price"]
-          },
-          {
-            "window": [{ "op": "rank", "as": "rank" }],
-            "sort": [{ "field": "price_count", "order": "descending" }]
-          },
-          {
-            "filter": "datum.rank == 1"
-          },
-          {
-            "calculate": "'Most common price: ' + datum.price_count",
-            "as": "text_annotation"
-          }
-        ],
-        "mark": {
-          "type": "text",
-          "align": "center",
-          "fontWeight": "bold",
-          "color": "black"
-        },
-        "encoding": {
-          "x": { "field": "rating", "type": "ordinal" },
-          "y": { "field": "pub_count", "type": "quantitative" },
-          "text": { "field": "text_annotation", "type": "nominal" }
-        }
-      }
+          ]},},
+            {
+  "transform": [
+    {
+      "aggregate": [{ "op": "count", "as": "price_count" }],
+      "groupby": ["price"]
+    },
+    {
+      "window": [{ "op": "rank", "as": "rank" }],
+      "sort": [{ "field": "price_count", "order": "descending" }]
+    },
+    {
+      "filter": "datum.rank == 1"
+    },
+    {
+      "calculate": "'Most common price: ' + datum.price",
+      "as": "text_annotation"
+    }
+  ],
+  "mark": {
+    "type": "text",
+    "align": "center",
+    "baseline": "bottom",
+    "dy": -10,
+    "fontWeight": "bold",
+    "color": "black"
+  },
+  "encoding": {
+    "x": { "field": "price", "type": "ordinal" },
+    "y": { "field": "price_count", "type": "quantitative" },
+    "text": { "field": "text_annotation" }
+  }
+}
     ]
   };
  //Ignore
@@ -502,6 +514,39 @@ const spec5 = {
           ]
         }
       },
+      {
+  "transform": [
+    {
+      "aggregate": [{ "op": "count", "as": "price_count" }],
+      "groupby": ["price"]
+    },
+    {
+      "window": [{ "op": "rank", "as": "rank" }],
+      "sort": [{ "field": "price_count", "order": "descending" }]
+    },
+    {
+      "filter": "datum.rank == 1"
+    },
+    {
+      "calculate": "'Most common price: ' + datum.price",
+      "as": "text_annotation"
+    }
+  ],
+  "mark": {
+    "type": "text",
+    "align": "center",
+    "baseline": "bottom",
+    "dy": -10,
+    "fontWeight": "bold",
+    "color": "black"
+  },
+  "encoding": {
+    "x": { "field": "price", "type": "ordinal" },
+    "y": { "field": "price_count", "type": "quantitative" },
+    "text": { "field": "text_annotation" }
+  }
+}
+ 
       
     ]
   };
@@ -549,6 +594,39 @@ const spec6 = {
           ]
         }
       },
+      {
+  "transform": [
+    {
+      "aggregate": [{ "op": "count", "as": "price_count" }],
+      "groupby": ["price"]
+    },
+    {
+      "window": [{ "op": "rank", "as": "rank" }],
+      "sort": [{ "field": "price_count", "order": "descending" }]
+    },
+    {
+      "filter": "datum.rank == 1"
+    },
+    {
+      "calculate": "'Most common price: ' + datum.price",
+      "as": "text_annotation"
+    }
+  ],
+  "mark": {
+    "type": "text",
+    "align": "center",
+    "baseline": "bottom",
+    "dy": -10,
+    "fontWeight": "bold",
+    "color": "black"
+  },
+  "encoding": {
+    "x": { "field": "price", "type": "ordinal" },
+    "y": { "field": "price_count", "type": "quantitative" },
+    "text": { "field": "text_annotation" }
+  }
+}
+ 
       
     ]
   };
@@ -595,7 +673,39 @@ const spec6 = {
           ]
         }
       },
-      
+      {
+  "transform": [
+    {
+      "aggregate": [{ "op": "count", "as": "price_count" }],
+      "groupby": ["price"]
+    },
+    {
+      "window": [{ "op": "rank", "as": "rank" }],
+      "sort": [{ "field": "price_count", "order": "descending" }]
+    },
+    {
+      "filter": "datum.rank == 1"
+    },
+    {
+      "calculate": "'Most common price: ' + datum.price",
+      "as": "text_annotation"
+    }
+  ],
+  "mark": {
+    "type": "text",
+    "align": "center",
+    "baseline": "bottom",
+    "dy": -10,
+    "fontWeight": "bold",
+    "color": "black"
+  },
+  "encoding": {
+    "x": { "field": "price", "type": "ordinal" },
+    "y": { "field": "price_count", "type": "quantitative" },
+    "text": { "field": "text_annotation" }
+  }
+}
+ 
     ]
   };
 const spec8 = {
@@ -641,7 +751,39 @@ const spec8 = {
           ]
         }
       },
-      
+      {
+  "transform": [
+    {
+      "aggregate": [{ "op": "count", "as": "price_count" }],
+      "groupby": ["price"]
+    },
+    {
+      "window": [{ "op": "rank", "as": "rank" }],
+      "sort": [{ "field": "price_count", "order": "descending" }]
+    },
+    {
+      "filter": "datum.rank == 1"
+    },
+    {
+      "calculate": "'Most common price: ' + datum.price",
+      "as": "text_annotation"
+    }
+  ],
+  "mark": {
+    "type": "text",
+    "align": "center",
+    "baseline": "bottom",
+    "dy": -10,
+    "fontWeight": "bold",
+    "color": "black"
+  },
+  "encoding": {
+    "x": { "field": "price", "type": "ordinal" },
+    "y": { "field": "price_count", "type": "quantitative" },
+    "text": { "field": "text_annotation" }
+  }
+}
+ 
     ]
   };
   
@@ -711,7 +853,9 @@ const spec8 = {
       },
 
       {
-
+              "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
         "mark": {    
               "type": "rule",
               "color": "red",
@@ -734,7 +878,11 @@ const spec8 = {
         }
       },
       
-      { "mark": {
+      { 
+            "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+        "mark": {
         "type": "text",
         "align": "left",
         
@@ -834,7 +982,9 @@ const spec8 = {
       },
 
       {
-
+              "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
         "mark": {    
               "type": "rule",
               "color": "red",
@@ -857,7 +1007,12 @@ const spec8 = {
         }
       },
       
-      { "mark": {
+      { 
+            "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+        
+        "mark": {
         "type": "text",
         "align": "left",
         
@@ -956,7 +1111,9 @@ const spec8 = {
       },
 
       {
-
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
         "mark": {    
               "type": "rule",
               "color": "red",
@@ -979,7 +1136,11 @@ const spec8 = {
         }
       },
       
-      { "mark": {
+      {
+            "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+        "mark": {
         "type": "text",
         "align": "left",
         
@@ -1079,7 +1240,9 @@ const spec8 = {
       },
 
       {
-
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
         "mark": {    
               "type": "rule",
               "color": "red",
@@ -1102,7 +1265,11 @@ const spec8 = {
         }
       },
       
-      { "mark": {
+      {     "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+        
+        "mark": {
         "type": "text",
         "align": "left",
         
@@ -1157,6 +1324,7 @@ const spec8 = {
     }
   ]
 };
+// dot
 const spec14 = {/*https://stackoverflow.com/questions/58600526/vega-lite-wilkinson-dot-plot-group-by-first-digit*/
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": "Distribution of Yelp Price Rating in Fitzroy ",
@@ -1182,7 +1350,8 @@ const spec14 = {/*https://stackoverflow.com/questions/58600526/vega-lite-wilkins
     }
 
   ],
-  "mark": "circle",
+  "layer":[
+    {  "mark": "circle",
   "encoding": {"y": {
       "field": "row",
       "type": "ordinal",
@@ -1205,11 +1374,32 @@ const spec14 = {/*https://stackoverflow.com/questions/58600526/vega-lite-wilkins
         {"field": "price", "type": "ordinal", "title": "Yelp Price Rating"},
     ]
   }
-  
+  },
+      {
+  "data": {
+    "values": [{"text_annotation": "Most common price: $$ - Like the rest of the Suburbs"}]
+  },
+  "mark": {
+    "type": "text",
+    "align": "center",
+    "baseline": "bottom",
+
+    "fontWeight": "bold",
+    "color": "black"
+  },
+        "encoding": {
+        "x": {"value": 50},   
+        "y": {"value": -10},  
+        "text": {"field": "text_annotation"}
+      }
+}
+
+
+  ]
+
   
   };
-
-
+// dot
   const spec15 = {/*https://stackoverflow.com/questions/58600526/vega-lite-wilkinson-dot-plot-group-by-first-digit*/
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": "Distribution of Yelp Price Rating in Melbourne ",
@@ -1235,7 +1425,7 @@ const spec14 = {/*https://stackoverflow.com/questions/58600526/vega-lite-wilkins
     }
 
   ],
-  "mark": "circle",
+  "layer":[{  "mark": "circle",
   "encoding": {"y": {
       "field": "row",
       "type": "ordinal",
@@ -1254,11 +1444,33 @@ const spec14 = {/*https://stackoverflow.com/questions/58600526/vega-lite-wilkins
         { "field": "city", "type": "nominal", "title": "City" },
         {"field": "price", "type": "ordinal", "title": "Yelp Price Rating"},
     ]
-  }
+  }},
+      {
+  "data": {
+    "values": [{"text_annotation": "Most common price: $$ - Like the rest of the Suburbs"}]
+  },
+  "mark": {
+    "type": "text",
+    "align": "center",
+    "baseline": "bottom",
+
+    "fontWeight": "bold",
+    "color": "black"
+  },
+        "encoding": {
+        "x": {"value": 100},   
+        "y": {"value": -10},  
+        "text": {"field": "text_annotation"}
+      }
+}
+
+
+]
+
   
   
   };
-  
+  // dot
   const spec16 = {/*https://stackoverflow.com/questions/58600526/vega-lite-wilkinson-dot-plot-group-by-first-digit*/
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": "Distribution of Yelp Price Rating in Richmond ",
@@ -1284,7 +1496,7 @@ const spec14 = {/*https://stackoverflow.com/questions/58600526/vega-lite-wilkins
     }
 
   ],
-  "mark": "circle",
+  "layer":[{  "mark": "circle",
   "encoding": {"y": {
       "field": "row",
       "type": "ordinal",
@@ -1303,8 +1515,30 @@ const spec14 = {/*https://stackoverflow.com/questions/58600526/vega-lite-wilkins
         { "field": "city", "type": "nominal", "title": "City" },
         {"field": "price", "type": "ordinal", "title": "Yelp Price Rating"},
     ]
-  }};
-    const spec17 = {/*https://stackoverflow.com/questions/58600526/vega-lite-wilkinson-dot-plot-group-by-first-digit*/
+  }},
+        {
+  "data": {
+    "values": [{"text_annotation": "Most common price: $$ - Like the rest of the Suburbs"}]
+  },
+  "mark": {
+    "type": "text",
+    "align": "center",
+    "baseline": "bottom",
+
+    "fontWeight": "bold",
+    "color": "black"
+  },
+        "encoding": {
+        "x": {"value": 50},   
+        "y": {"value": -10},  
+        "text": {"field": "text_annotation"}
+      }
+}
+
+]
+};
+// dot    
+const spec17 = {/*https://stackoverflow.com/questions/58600526/vega-lite-wilkinson-dot-plot-group-by-first-digit*/
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": "Distribution of Yelp Price Rating in South Melbourne ",
     "data": {
@@ -1329,6 +1563,7 @@ const spec14 = {/*https://stackoverflow.com/questions/58600526/vega-lite-wilkins
     }
 
   ],
+  "layer": [{
   "mark": "circle",
   "encoding": {"y": {
       "field": "row",
@@ -1348,7 +1583,28 @@ const spec14 = {/*https://stackoverflow.com/questions/58600526/vega-lite-wilkins
         { "field": "city", "type": "nominal", "title": "City" },
         {"field": "price", "type": "ordinal", "title": "Yelp Price Rating"},
     ]
-  }};
+  }
+},
+      {
+  "data": {
+    "values": [{"text_annotation": "Most common price: $$ - Like the rest of the Suburbs"}]
+  },
+  "mark": {
+    "type": "text",
+    "align": "center",
+    "baseline": "bottom",
+
+    "fontWeight": "bold",
+    "color": "black"
+  },
+        "encoding": {
+        "x": {"value": 50},   
+        "y": {"value": -10},  
+        "text": {"field": "text_annotation"}
+      }
+}
+]
+};
   
   const spec19 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -1407,7 +1663,7 @@ const spec14 = {/*https://stackoverflow.com/questions/58600526/vega-lite-wilkins
       
     
   };  
-  // Add that mainly all $$
+  // Add that mainly all $$ dots
   const spec18 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   
@@ -1447,7 +1703,7 @@ const spec14 = {/*https://stackoverflow.com/questions/58600526/vega-lite-wilkins
   ]
 };
 
-
+// Suburb Histograms
 const spec20 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": "Distribution of Review Count in Fitzroy ",
@@ -1487,7 +1743,41 @@ const spec20 = {
           ]
         }
       },
-      
+                  {
+  "transform": [
+    {"bin": {"maxbins": 8}, "field": "review_count", "as": "binned_review"},
+    {
+      "aggregate": [{ "op": "count", "as": "pub_count" }],
+      "groupby": ["binned_review"]
+    },
+    {
+      "window": [{ "op": "rank", "as": "rank" }],
+      "sort": [{ "field": "pub_count", "order": "descending" }]
+    },
+    {
+      "filter": "datum.rank == 1"
+    },
+    {
+      "calculate": "'Commonly 0-20 reviews' ",
+      "as": "text_annotation"
+    }
+  ],
+  "mark": {
+    "type": "text",
+    "align": "center",
+    "baseline": "bottom",
+    "dy": 35,
+     "dx": 95,
+     
+    "fontWeight": "bold",
+    "color": "black"
+  },
+  "encoding": {
+    "x": { "field": "binned_review", "type": "quantitative" },
+    "y": { "field": "pub_count", "type": "quantitative" },
+    "text": { "field": "text_annotation" }
+  }
+}
     ]
   };
 const spec21 = {
@@ -1529,7 +1819,41 @@ const spec21 = {
           ]
         }
       },
-      
+            {
+  "transform": [
+    {"bin": {"maxbins": 8}, "field": "review_count", "as": "binned_review"},
+    {
+      "aggregate": [{ "op": "count", "as": "pub_count" }],
+      "groupby": ["binned_review"]
+    },
+    {
+      "window": [{ "op": "rank", "as": "rank" }],
+      "sort": [{ "field": "pub_count", "order": "descending" }]
+    },
+    {
+      "filter": "datum.rank == 1"
+    },
+    {
+      "calculate": "'Commonly 0-20 reviews' ",
+      "as": "text_annotation"
+    }
+  ],
+  "mark": {
+    "type": "text",
+    "align": "center",
+    "baseline": "bottom",
+    "dy": 35,
+     "dx": 95,
+     
+    "fontWeight": "bold",
+    "color": "black"
+  },
+  "encoding": {
+    "x": { "field": "binned_review", "type": "quantitative" },
+    "y": { "field": "pub_count", "type": "quantitative" },
+    "text": { "field": "text_annotation" }
+  }
+}
     ]
   };
 const spec22 = {
@@ -1571,7 +1895,40 @@ const spec22 = {
           ]
         }
       },
-      
+            {
+  "transform": [
+    {"bin": {"maxbins": 8}, "field": "review_count", "as": "binned_review"},
+    {
+      "aggregate": [{ "op": "count", "as": "pub_count" }],
+      "groupby": ["binned_review"]
+    },
+    {
+      "window": [{ "op": "rank", "as": "rank" }],
+      "sort": [{ "field": "pub_count", "order": "descending" }]
+    },
+    {
+      "filter": "datum.rank == 1"
+    },
+    {
+      "calculate": "'Commonly 0-5 reviews' ",
+      "as": "text_annotation"
+    }
+  ],
+  "mark": {
+    "type": "text",
+    "align": "center",
+    "baseline": "bottom",
+    "dy": 15,
+     "dx": 95,
+    "fontWeight": "bold",
+    "color": "black"
+  },
+  "encoding": {
+    "x": { "field": "binned_review", "type": "quantitative" },
+    "y": { "field": "pub_count", "type": "quantitative" },
+    "text": { "field": "text_annotation" }
+  }
+}
     ]
   };
 const spec23 = {
@@ -1613,10 +1970,46 @@ const spec23 = {
           ]
         }
       },
+      {
+  "transform": [
+    {"bin": {"maxbins": 8}, "field": "review_count", "as": "binned_review"},
+    {
+      "aggregate": [{ "op": "count", "as": "pub_count" }],
+      "groupby": ["binned_review"]
+    },
+    {
+      "window": [{ "op": "rank", "as": "rank" }],
+      "sort": [{ "field": "pub_count", "order": "descending" }]
+    },
+    {
+      "filter": "datum.rank == 1"
+    },
+    {
+      "calculate": "'Commonly 3-6 reviews' ",
+      "as": "text_annotation"
+    }
+  ],
+  "mark": {
+    "type": "text",
+    "align": "center",
+    "baseline": "bottom",
+    "dy": 35,
+     "dx": 85,
+    "fontWeight": "bold",
+    "color": "black"
+  },
+  "encoding": {
+    "x": { "field": "binned_review", "type": "quantitative" },
+    "y": { "field": "pub_count", "type": "quantitative" },
+    "text": { "field": "text_annotation" }
+  }
+}
+      
       
     ]
   };
-const spec24 = {
+// Bubble Chart
+  const spec24 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": "Demographics of Key Suburbs ",
   
@@ -1725,8 +2118,212 @@ const spec24 = {
         }    
   };
 
+const spechist = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Distribution of Review Count in Melbourne Pubs ",
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+    "width": 300,
+    "height": 300,
 
-vegaEmbed("#vis", spec, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+    "layer": [
+      {
+        "mark": "bar",
+        "encoding": {
+      "x": {
+      "bin": true,
+      "field": "review_count",
+      "title": "Review Count"
+          },
+          "y": {
+            "aggregate": "count",
+            "type": "quantitative",
+            "title": "Number of Pubs"
+          },
+          
+          "tooltip": [
+            
+            { "aggregate": "count", "type": "quantitative", "title": "Number of Pubs" }
+          ]
+        }
+      },
+      {
+  "transform": [
+    {"bin": {"maxbins": 10}, "field": "review_count", "as": "binned_review"},
+    {
+      "aggregate": [{ "op": "count", "as": "pub_count" }],
+      "groupby": ["binned_review"]
+    },
+    {
+      "window": [{ "op": "rank", "as": "rank" }],
+      "sort": [{ "field": "pub_count", "order": "descending" }]
+    },
+    {
+      "filter": "datum.rank == 1"
+    },
+    {
+      "calculate": "'Commonly 0-20 reviews' ",
+      "as": "text_annotation"
+    }
+  ],
+  "mark": {
+    "type": "text",
+    "align": "center",
+    "baseline": "bottom",
+    "dy": 0,
+     "dx": 100,
+    "fontWeight": "bold",
+    "color": "black"
+  },
+  "encoding": {
+    "x": { "field": "binned_review", "type": "quantitative" },
+    "y": { "field": "pub_count", "type": "quantitative" },
+    "text": { "field": "text_annotation" }
+  }
+}
+      
+    ]
+  };
+
+
+    const specdist = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Distribution of Yelp Review Rating in Melbourne Pubs ",
+    "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+    "width": 300,
+    "height": 300,
+    "transform": [
+
+    {
+      "aggregate": [{"op": "count", "as": "count"}],
+      "groupby": ["rating"]
+    },
+    {
+      "joinaggregate": [{"op": "sum", "field": "count", "as": "total"}],
+      
+    },
+    {
+      "calculate": "datum.count / datum.total",
+      "as": "proportion"
+    },  
+
+  ],
+    "layer": [
+      {
+           "mark": {
+          "type": "bar",
+          
+        },
+        "opacity": 0.4, 
+         "width": 200 ,   
+        "encoding": {
+          "x": {
+            "field": "rating",
+            "type": "quantitative",
+            "title": "Rating",
+            
+          },
+          "y": {
+            "title": "Proportion of Pubs",
+          "field": "proportion",
+          "type": "quantitative",
+             
+          "axis": {"format": ".0%"},  
+          
+
+          },
+          
+          "tooltip": [
+
+            { "field": "count", "type": "quantitative", "title": "Number of Pubs" },
+            { "field": "proportion", "type": "quantitative", "title": "Proportion of Pubs","format": ".0%" }
+          ]
+        }
+      },
+
+      {
+        "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+
+        "mark": {    
+              "type": "rule",
+              "color": "red",
+              "strokeDash": [5, 5]},
+        "transform": [
+
+        {"calculate": "toNumber(datum.rating)", "as": "numeric_rating"},
+        {"aggregate": [{"op": "mean", "field": "numeric_rating", "as": "mean_rating"}]}
+      ],
+        
+        "encoding": {
+          "x": {
+            
+            "type": "quantitative",
+            "field": "mean_rating",
+           
+          },
+          "y": {},
+          
+        }
+      },
+      
+      { 
+                "data": {
+      "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
+    },
+        "mark": {
+        "type": "text",
+        "align": "left",
+        
+        "dx": 5,          
+        "dy": -5,         
+        "color": "red",
+        "fontSize": 10,
+        "fontWeight": "bold"
+      },
+          "transform": [
+
+    {"calculate": "toNumber(datum.rating)", "as": "numeric_rating"},  
+    {"aggregate": [{"op": "mean", "field": "numeric_rating", "as": "mean_rating"}]},
+    {"calculate": "'Mean: ' + format(datum.mean_rating, '.2f')", "as": "label"}
+
+  ],
+  "encoding": {
+        "x": {
+            
+            "type": "quantitative",
+            "field": "mean_rating",
+           
+          },
+        "y": {"datum": 0.45},   
+        "text": {"field": "label"}
+    
+      
+  } 
+}
+    ]
+  }; 
+
+  const spectotal = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  
+  "hconcat": [
+    
+      spec3,
+    
+    
+      specdist,
+    
+    spechist
+    
+  ]
+};
+
+  vegaEmbed("#vis", spec, { mode: "vega-lite" }).then(console.log).catch(console.warn);
 vegaEmbed("#vis-map", specmap2, { mode: "vega-lite" }).then(console.log).catch(console.warn);
   vegaEmbed("#vis3", spec3, { mode: "vega-lite" }).then(console.log).catch(console.warn);
   vegaEmbed("#vis4", spec4, { mode: "vega-lite" }).then(console.log).catch(console.warn);
@@ -1738,10 +2335,11 @@ vegaEmbed("#vis-map", specmap2, { mode: "vega-lite" }).then(console.log).catch(c
   vegaEmbed("#vis18", spec18, { mode: "vega-lite" }).then(console.log).catch(console.warn);
     vegaEmbed("#vis20", spec20, { mode: "vega-lite" }).then(console.log).catch(console.warn);
     vegaEmbed("#vis21", spec21, { mode: "vega-lite" }).then(console.log).catch(console.warn);
-        vegaEmbed("#vis22", spec22, { mode: "vega-lite" }).then(console.log).catch(console.warn);
-            vegaEmbed("#vis23", spec23, { mode: "vega-lite" }).then(console.log).catch(console.warn);
-            vegaEmbed("#vis24", spec24, { mode: "vega-lite" }).then(console.log).catch(console.warn);
-                        //vegaEmbed("#vis25", spec25, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+ vegaEmbed("#vis22", spec22, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+vegaEmbed("#vis23", spec23, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+vegaEmbed("#vis24", spec24, { mode: "vega-lite" }).then(console.log).catch(console.warn);
+
+vegaEmbed("#vis-one", spectotal, { mode: "vega-lite" }).then(console.log).catch(console.warn);
 </script>
 </div>
 </body>
