@@ -52,9 +52,10 @@
     font-size: 14px;  
     margin-bottom: 10px;  
     }
-    .map-text2{      display: flex;
+    .map-text2{      
+      display: flex;
       margin: 0 auto;   
-      text-align: center;
+      text-align: left;
       justify-content: left;
       align-items: flex-start; 
       flex-wrap: wrap;             
@@ -68,9 +69,10 @@
 }
     #Suburb-Price,#Suburb-Rating1,#Suburb-Rating2{
       display: flex;
-      justify-content: left;
+      justify-content: center;
       align-items: flex-start; 
     }
+
     #vis5, #vis6, #vis7 ,#vis8,#vis9,#vis10,#vis11,#vis12{
       flex: 1;   
       max-width: 100%;
@@ -79,7 +81,7 @@
       justify-content: center;
       align-items: flex-start; 
     }
-    #vis, #vis2, #vis3 ,#vis4,#vis-one{
+     #vis2, #vis3 ,#vis4,#vis-one{
       margin-top: 40px;
        max-width: 100%;
       display: flex;
@@ -94,6 +96,23 @@
         border: 6px solid #ccc;   
         border-radius: 12px;      
 }
+.bold-text {
+  font-weight: bold;
+}
+.grid-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); 
+      gap: 225px; 
+      align-items: start;
+      justify-content: center;
+      margin-bottom: 100px;
+    }
+   .map {
+      width: 500px;
+      height: 500px;
+      border: 1px solid #ccc;
+      
+    }
   </style>
 </head>
 <body>
@@ -102,23 +121,67 @@
 <div class="map-text1">
   <div class="text">
     <h2>Charateristics  of Melbourne Pubs</h2>
-    <p>Here, are the main inner suburbs which will be discussed.<br>
-        Being Fitzroy, Melbourne, Richmond & South Melbourne.    <br></p>
+    
         </div>
         </div>
+
 <div id="vis-one"></div>
+
+<div class="map-text1">
+  <div class="text">
+    <p>The most common charateristics of Melbourne Pubs are:<br>
+        Most common price type being $$, having an average rating of 3.52 out of 5, having 0-20 reviews on Yelp.    <br>
+      
+      
+         <span class="bold-text">Explanation of Yelp Price Rating </span><br>
+       
+        <span class="bold-text">$ (Inexpensive): </span>Businesses with one dollar sign are typically the most budget-friendly.<br>
+        <span class="bold-text">$$ (Moderate): </span>These are mid-range priced options.<br>
+        <span class="bold-text">$$$ (Expensive):</span> Businesses in this category are pricier.<br>
+        <span class="bold-text">$$$$ (Very Expensive): </span>This represents the highest price tier.<br>
+
+    
+        </p>
+    
+        </div>
+        </div>
+<div class="map-text1">
+  <div class="text">
+    <h2>Compare the Spreads of Yelp Ratings and Prices</h2>
+    
+        </div>
+        </div>
+<div class="grid-container">
+  <div id="vis" class="map"></div>
+  <div id="vis-map"  class="map"></div>
+</div>
+
+
+
+
 <div class="map-text1">
   <div class="text">
     <h2>Main Suburbs of the Investigation into Melbourne Pubs</h2>
     <p>Here, are the main inner suburbs which will be discussed.<br>
-        Being Fitzroy, Melbourne, Richmond & South Melbourne.    <br></p>
+        Being Fitzroy, Melbourne, Richmond & South Melbourne.    <br>
+        The question is if at all do these suburbs deviate from<br> the rest of Melbourne's pubs or how similar are they?</p>
         </div>
         </div>
 <div id="Suburb-Rating1">
 
   <div id="vis13"></div>
-  <div id="vis24"></div>
+  
 </div>
+<div class="map-text2">
+  <div class="text">
+    <h4 style="text-align: center;"> Summary of Yelp Ratings</h4>  
+    <p style="text-align: center;"> Fitzroy, Melbourne & Richmond all have a <span class="bold-text">higher mean</span> ratings then the overall average of <span class="bold-text">3.52.</span><br>
+    Whilst South Melbourne is <span class="bold-text">lower mean</span> rating being<span class="bold-text"> 3.44.</span> </p>
+    
+        </div>
+        </div>
+
+
 <div class="middle-text">
  <h3>Distrubtion of Yelp Price Ratings by Suburb</h3>
  </div>
@@ -128,14 +191,13 @@
   <div class="text">
         <h3> Explanation of Yelp Price Rating</h3>  
         <p>
-        $ (Inexpensive): Businesses with one dollar sign are typically the most budget-friendly.<br>
-        $$ (Moderate): These are mid-range priced options.<br>
-        $$$ (Expensive): Businesses in this category are pricier.<br>
-        $$$$ (Very Expensive): This represents the highest price tier.<br>
-
-    
-        </p>
-          
+        <span class="bold-text">$ (Inexpensive): </span>Businesses with one dollar sign are typically the most budget-friendly.<br>
+        <span class="bold-text">$$ (Moderate): </span>These are mid-range priced options.<br>
+        <span class="bold-text">$$$ (Expensive):</span> Businesses in this category are pricier.<br>
+        <span class="bold-text">$$$$ (Very Expensive): </span>This represents the highest price tier.<br></p>
+        <h3> Summary of Yelp Price Rating</h3>  
+          <p> Overall all four of these suburbs have nearly identical price variation in their pubs.<br>
+          This being that a majority of all prices in pubs are catergorised as having <span class="bold-text">mid-range</span> priced options. </p>      
 </div>  
 </div>
 <div id="Suburb-Price">
@@ -144,25 +206,45 @@
   <div id="vis7"></div>
   <div id="vis8"></div>
 </div>
+<div class="middle-text">
+ <h3>Distrubtion of Yelp Reviews by Suburb</h3>
+ </div>
+<div class="map-text2">
+  <div id="Suburb-Rating1">
+    <div id="vis27"></div>
+  </div>
 
-  <div id="vis" style=" border: 1px solid #ccc; "></div>
-  <div id="vis-map"  style="border: 1px solid #ccc;"></div>
+</div>
 
-<div id="vis3"></div>
-<div id="vis20"></div>
-<div id="vis21"></div>
-<div id="vis22"></div>
-<div id="vis23"></div>
-<div id="vis25"></div>
-<div id="vis26"></div>
+<div class="map-text1">
+  <div class="text">
+    <h4 style="text-align: center;"> Summary of Review Count Distribution </h4>
+    <p style="text-align: center;"> All of them have review counts similar to the rest of the pubs. With <span class="bold-text">zero</span> pubs going outside the norm.<br></p>
+  </div>
+  </div>
+<div class="middle-text">
+ <h3>Demographics of Suburbs</h3>
+ </div>
+
+
+<div class="map-text2">
+  <div id="vis24"></div>
+  <div class="text">
+    <h4 style="text-align: center;"> Summary of Demographics</h4>  
+    <p style="text-align: center;"> Fitzroy, Melbourne & Richmond all have a higher mean ratings then the overall average of 3.52.<br>
+    Whilst South Melbourne is lower mean rating being 3.44. </p>
+    
+        </div>
+        </div>
+
 <script>
  //Map - Add graticules, ocean, filtering annotations
 const spec = {
   // Used Week 9 ACT 3 has an example
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "Pubs around Melbourne (Yelp)",
-  "width": 800,
-  "height": 600,
+  "width": 500,
+  "height": 500,
 
   "params": [
     {
@@ -181,7 +263,8 @@ const spec = {
   "projection": {
     "type": "mercator",
     "center": [144.9631, -37.8136],  // Melbourne center
-    "scale": 40000
+    "scale": 40000,
+    "translate": [250, 250] 
   },
 
   "layer": [
@@ -201,6 +284,7 @@ const spec = {
         "strokeWidth": 1
       }
     },
+
 
     // Pubs points
     {
@@ -241,8 +325,8 @@ const specmap2 = {
   // Used Week 9 ACT 3 has an example
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "Pubs around Melbourne (Yelp)",
-  "width": 800,
-  "height": 600,
+  "width": 500,
+  "height": 500,
 
   "params": [
     {
@@ -260,11 +344,12 @@ const specmap2 = {
   "projection": {
     "type": "mercator",
     "center": [144.9631, -37.8136],  // Melbourne center
-    "scale": 40000
+    "scale": 40000,
+    "translate": [250, 250] 
   },
 
   "layer": [
-    // TopoJSON background
+    // TopoJSON 
     {
       "data": {
         "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Week-9-Homework/js/SA2_2021_AUST_GDA2020.json",
@@ -280,6 +365,14 @@ const specmap2 = {
         "strokeWidth": 1
       }
     },
+              {
+            "data": {
+              "url": "",
+              "format": {"type": "topojson", "feature": "oceans"}
+            },
+            "mark": {"type": "geoshape", "fill": "skyblue"}
+          },
+          
 
     // Pubs points
     {
@@ -495,7 +588,10 @@ const spec5 = {
   ],
     "layer": [
       {
-        "mark": "bar",
+                "mark": {
+          "type": "bar",
+          "color": "#FFD700"
+        }, //FFD700
         "encoding": {
           "x": {
             "field": "price",
@@ -575,7 +671,11 @@ const spec6 = {
   ],
     "layer": [
       {
-        "mark": "bar",
+          "mark": {
+          "type": "bar",
+          "color": "#4169e1"
+        },
+
         "encoding": {
           "x": {
             "field": "price",
@@ -654,7 +754,10 @@ const spec6 = {
   ],
     "layer": [
       {
-        "mark": "bar",
+                  "mark": {
+          "type": "bar",
+          "color": "black"
+        },
         "encoding": {
           "x": {
             "field": "price",
@@ -732,7 +835,10 @@ const spec8 = {
   ],
     "layer": [
       {
-        "mark": "bar",
+                 "mark": {
+          "type": "bar",
+          "color": "#E1251B"
+        },
         "encoding": {
           "x": {
             "field": "price",
@@ -793,8 +899,8 @@ const spec8 = {
     "data": {
       "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
     },
-    "width": 250,
-    "height": 130,
+   "width": 600,
+    "height": 250,
     "transform": [
     {
       "filter": {
@@ -842,12 +948,12 @@ const spec8 = {
           
 
           },
-          
           "tooltip": [
             { "field": "city", "type": "nominal", "title": "City" },
             { "field": "count", "type": "quantitative", "title": "Number of Pubs" },
-            { "field": "proportion", "type": "quantitative", "title": "Proportion of Pubs","format": ".0%" }
-          ],
+            { "field": "proportion", "type": "quantitative", "title": "Proportion of Pubs","format": ".0%" },
+            { "field": "rating", "type": "quantitative", "title": "Rating"}
+          ]
           
         }
       },
@@ -925,8 +1031,8 @@ const spec8 = {
     "data": {
       "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
     },
-    "width": 250,
-    "height": 130,
+   "width": 600,
+    "height": 250,
     "transform": [
     {
       "filter": {
@@ -976,7 +1082,8 @@ const spec8 = {
           "tooltip": [
             { "field": "city", "type": "nominal", "title": "City" },
             { "field": "count", "type": "quantitative", "title": "Number of Pubs" },
-            { "field": "proportion", "type": "quantitative", "title": "Proportion of Pubs","format": ".0%" }
+            { "field": "proportion", "type": "quantitative", "title": "Proportion of Pubs","format": ".0%" },
+            { "field": "rating", "type": "quantitative", "title": "Rating"}
           ]
         }
       },
@@ -1054,8 +1161,8 @@ const spec8 = {
     "data": {
       "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
     },
-    "width": 250,
-    "height": 130,
+   "width": 600,
+    "height": 250,
     "transform": [
     {
       "filter": {
@@ -1105,7 +1212,8 @@ const spec8 = {
           "tooltip": [
             { "field": "city", "type": "nominal", "title": "City" },
             { "field": "count", "type": "quantitative", "title": "Number of Pubs" },
-            { "field": "proportion", "type": "quantitative", "title": "Proportion of Pubs","format": ".0%" }
+            { "field": "proportion", "type": "quantitative", "title": "Proportion of Pubs","format": ".0%" },
+            { "field": "rating", "type": "quantitative", "title": "Rating"}
           ]
         }
       },
@@ -1183,8 +1291,8 @@ const spec8 = {
     "data": {
       "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
     },
-    "width": 250,
-    "height": 130,
+   "width": 600,
+    "height": 250,
     "transform": [
     {
       "filter": {
@@ -1234,7 +1342,8 @@ const spec8 = {
           "tooltip": [
             { "field": "city", "type": "nominal", "title": "City" },
             { "field": "count", "type": "quantitative", "title": "Number of Pubs" },
-            { "field": "proportion", "type": "quantitative", "title": "Proportion of Pubs","format": ".0%" }
+            { "field": "proportion", "type": "quantitative", "title": "Proportion of Pubs","format": ".0%" },
+            { "field": "rating", "type": "quantitative", "title": "Rating"}
           ]
         }
       },
@@ -1710,8 +1819,8 @@ const spec20 = {
     "data": {
       "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
     },
-    "width": 150,
-    "height": 130,
+   "width": 500,
+    "height": 250,
     "transform": [
     {
       "filter": {
@@ -1724,7 +1833,9 @@ const spec20 = {
   ],
     "layer": [
       {
-        "mark": "bar",
+                "mark": {
+          "type": "bar",
+          "color": "#FFD700"},
         "encoding": {
       "x": {
       "bin": true,
@@ -1767,7 +1878,7 @@ const spec20 = {
     "align": "center",
     "baseline": "bottom",
     "dy": 35,
-     "dx": 95,
+     "dx": 195,
      
     "fontWeight": "bold",
     "color": "black"
@@ -1786,8 +1897,8 @@ const spec21 = {
     "data": {
       "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
     },
-    "width": 150,
-    "height": 130,
+   "width": 500,
+    "height": 250,
     "transform": [
     {
       "filter": {
@@ -1800,7 +1911,9 @@ const spec21 = {
   ],
     "layer": [
       {
-        "mark": "bar",
+                "mark": {
+          "type": "bar",
+          "color": "#4169e1"},
         "encoding": {
       "x": {
       "bin": true,
@@ -1843,7 +1956,7 @@ const spec21 = {
     "align": "center",
     "baseline": "bottom",
     "dy": 35,
-     "dx": 95,
+     "dx": 195,
      
     "fontWeight": "bold",
     "color": "black"
@@ -1862,8 +1975,8 @@ const spec22 = {
     "data": {
       "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
     },
-    "width": 150,
-    "height": 130,
+    "width": 500,
+    "height": 250,
     "transform": [
     {
       "filter": {
@@ -1876,7 +1989,9 @@ const spec22 = {
   ],
     "layer": [
       {
-        "mark": "bar",
+                 "mark": {
+          "type": "bar",
+          "color": "black"},
         "encoding": {
       "x": {
       "bin": true,
@@ -1919,7 +2034,7 @@ const spec22 = {
     "align": "center",
     "baseline": "bottom",
     "dy": 15,
-     "dx": 95,
+     "dx": 195,
     "fontWeight": "bold",
     "color": "black"
   },
@@ -1937,8 +2052,8 @@ const spec23 = {
     "data": {
       "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/Pubs.csv"
     },
-    "width": 150,
-    "height": 130,
+    "width": 500,
+    "height": 250,
     "transform": [
     {
       "filter": {
@@ -1951,7 +2066,9 @@ const spec23 = {
   ],
     "layer": [
       {
-        "mark": "bar",
+                  "mark": {
+          "type": "bar",
+          "color": "#E1251B"},
         "encoding": {
       "x": {
       "bin": true,
@@ -1993,8 +2110,8 @@ const spec23 = {
     "type": "text",
     "align": "center",
     "baseline": "bottom",
-    "dy": 35,
-     "dx": 85,
+    "dy": 45,
+     "dx": 5,
     "fontWeight": "bold",
     "color": "black"
   },
@@ -2090,13 +2207,15 @@ const spec23 = {
           
           "tooltip": [
             { "field": "city", "type": "nominal", "title": "City: " },
-            { "field": "Tot_P_M", "type": "quantitative", "title": "Male Population: " },
-            { "field": "Tot_P_F", "type": "quantitative", "title": "Female Population: " },
             { "field": "Tot_P_P", "type": "quantitative", "title": "Total Population: " },
             { "field": "Median_age_persons", "type": "quantitative", "title": "Median Age: " },
             { "field": "Median_mortgage_repay_monthly", "type": "quantitative", "title": "Median Monthly Mortgage Repayment: ","format": "$.2f" },
             { "field": "Median_tot_prsnl_inc_weekly", "type": "quantitative", "title": "Median Weekly Personal Income: ","format": "$.2f" },
             { "field": "Median_rent_weekly", "type": "quantitative", "title": "Median Weekly Rent:","format": "$.2f" },
+            { "field": "Average_household_size", "type": "quantitative", "title": "Average Household Size: " },
+             { "field": "Australian_Born", "type": "quantitative", "title": "Australian Born: ","format": ".0%" },
+             { "field": "High_School", "type": "quantitative", "title": "Year 12 Completion: ","format": ".0%" },
+             { "field": "Average_num_psns_per_bedroom", "type": "quantitative", "title": "Average Number of Bedrooms: " },
           ],
           "color":{
             "field": "city",
@@ -2239,7 +2358,8 @@ const spechist = {
           "tooltip": [
 
             { "field": "count", "type": "quantitative", "title": "Number of Pubs" },
-            { "field": "proportion", "type": "quantitative", "title": "Proportion of Pubs","format": ".0%" }
+            { "field": "proportion", "type": "quantitative", "title": "Proportion of Pubs","format": ".0%" },
+            { "field": "rating", "type": "quantitative", "title": "Rating"}
           ]
         }
       },
@@ -2322,7 +2442,24 @@ const spechist = {
     
   ]
 };
-
+  const spec27 = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  
+  "vconcat": [
+    {
+      "hconcat": [
+        spec20,       // Fitzroy
+        spec21       // Melbourne
+      ]
+    },
+    {
+      "hconcat": [
+        spec22,      // Richmond
+        spec23       // South Melbourne
+      ]
+    }
+  ]
+};
   vegaEmbed("#vis", spec, { mode: "vega-lite" }).then(console.log).catch(console.warn);
 vegaEmbed("#vis-map", specmap2, { mode: "vega-lite" }).then(console.log).catch(console.warn);
   vegaEmbed("#vis3", spec3, { mode: "vega-lite" }).then(console.log).catch(console.warn);
@@ -2338,7 +2475,7 @@ vegaEmbed("#vis-map", specmap2, { mode: "vega-lite" }).then(console.log).catch(c
  vegaEmbed("#vis22", spec22, { mode: "vega-lite" }).then(console.log).catch(console.warn);
 vegaEmbed("#vis23", spec23, { mode: "vega-lite" }).then(console.log).catch(console.warn);
 vegaEmbed("#vis24", spec24, { mode: "vega-lite" }).then(console.log).catch(console.warn);
-
+vegaEmbed("#vis27", spec27, { mode: "vega-lite" }).then(console.log).catch(console.warn);
 vegaEmbed("#vis-one", spectotal, { mode: "vega-lite" }).then(console.log).catch(console.warn);
 </script>
 </div>
