@@ -347,13 +347,16 @@ const specmap2 = {
     "scale": 40000,
     "translate": [250, 250] 
   },
+  "graticule": {
+  "step": [0.05, 0.05]  // longitude, latitude
+},
 
   "layer": [
     // Da ocean
 
           {
             "data": {
-              "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/output.json",
+              "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/ocean.json",
               "format": {"type": "topojson", "feature": "oceans"}
             },
             "mark": {"type": "geoshape", "fill": "skyblue"}
