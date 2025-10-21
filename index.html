@@ -120,6 +120,7 @@
 <h1>Pubs in Melbourne</h1>
 <div class="map-text1">
   <div class="text">
+    <p>By Gus Heath</p>
     <h2>Charateristics  of Melbourne Pubs</h2>
     
         </div>
@@ -231,12 +232,19 @@
   <div id="vis24"></div>
   <div class="text">
     <h4 style="text-align: center;"> Summary of Demographics</h4>  
-    <p style="text-align: center;"> Fitzroy, Melbourne & Richmond all have a higher mean ratings then the overall average of 3.52.<br>
-    Whilst South Melbourne is lower mean rating being 3.44. </p>
+    <p style="text-align: center;"> Some Noticable trends you can find are:<br>
+       Melbourne's bigger population, but has way more overseas born people.<br> 
+    South Melbourne being the oldest yet least educated. <br> 
+  What can you find?</p>
     
         </div>
         </div>
-
+    <p style="text-align: left;font-size: 16px;"> References<br>
+      https://www.kaggle.com/datasets/shashankarao96207/pub-hopping-in-melbourne-yelp/data<br>
+      https://www.abs.gov.au/census/find-census-data/datapacks<br>
+      https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/digital-boundary-files?<br>
+      https://www.naturalearthdata.com/downloads/
+    </p>
 <script>
  //Map - Add graticules, ocean, filtering annotations
 const spec = {
@@ -268,10 +276,10 @@ const spec = {
   },
 
   "layer": [
-    // TopoJSON background
+    // TopoJSON with all
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Week-9-Homework/js/SA2_2021_AUST_GDA2020.json",
+        "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/output.json",
         "format": {
           "type": "topojson",
           "feature": "SA2_2021_AUST_GDA2020"
@@ -284,6 +292,7 @@ const spec = {
         "strokeWidth": 1
       }
     },
+
 
 
     // Pubs points
@@ -299,14 +308,15 @@ const spec = {
         "type": "circle",
         "tooltip": {"content": "data"},
         "stroke": "#333",
-        "strokeWidth": 0.5
+        "strokeWidth": 0.5,
+        "opacity": 0.6
       },
       "encoding": {
         "longitude": {"field": "longitude", "type": "quantitative"},
         "latitude": {"field": "latitude", "type": "quantitative"},
         "color": {
           
-          "value": "#39FF14" 
+          "value": "red" 
         },
         "size": {"value": 50},
         "tooltip": [
@@ -348,21 +358,13 @@ const specmap2 = {
     "translate": [250, 250] 
   },
   "graticule": {
-  "step": [0.05, 0.05]  // longitude, latitude
+  "step": [0.05, 0.05]  
 },
 
   "layer": [
-    // Da ocean
 
-          {
-            "data": {
-              "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/ocean.json",
-              "format": {"type": "topojson", "feature": "oceans"}
-            },
-            "mark": {"type": "geoshape", "fill": "skyblue"}
-          },
           
-    // TopoJSON 
+    // TopoJSON with all
     {
       "data": {
         "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/output.json",
@@ -393,14 +395,15 @@ const specmap2 = {
         "type": "circle",
         "tooltip": {"content": "data"},
         "stroke": "#333",
-        "strokeWidth": 0.5
+        "strokeWidth": 0.5,
+        "opacity": 0.6
       },
       "encoding": {
         "longitude": {"field": "longitude", "type": "quantitative"},
         "latitude": {"field": "latitude", "type": "quantitative"},
         "color": {
           
-          "value": "#39FF14" 
+          "value": "orange" 
         },
         "size": {"value": 50},
         "tooltip": [
