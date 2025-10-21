@@ -349,6 +349,16 @@ const specmap2 = {
   },
 
   "layer": [
+    // Da ocean
+
+          {
+            "data": {
+              "url": "https://raw.githubusercontent.com/GusXIX/3179/refs/heads/Assignment-Two-Branch/data/ocean.json",
+              "format": {"type": "topojson", "feature": "oceans"}
+            },
+            "mark": {"type": "geoshape", "fill": "skyblue"}
+          },
+          
     // TopoJSON 
     {
       "data": {
@@ -365,14 +375,7 @@ const specmap2 = {
         "strokeWidth": 1
       }
     },
-              {
-            "data": {
-              "url": "",
-              "format": {"type": "topojson", "feature": "oceans"}
-            },
-            "mark": {"type": "geoshape", "fill": "skyblue"}
-          },
-          
+
 
     // Pubs points
     {
